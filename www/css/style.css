@@ -2,6 +2,10 @@
 .bar-balanced {
 	background-color: rgb(140, 197, 65) !important;
 }
+.toggle.toggle-balanced input:checked + .track {
+    border-color: rgb(140, 197, 65) !important;
+    background-color: rgb(140, 197, 65) !important;
+}
 #map {
 
 }
@@ -21,6 +25,11 @@
 	position: absolute;
 	top: 100px;
 	left: 15px;
+}
+
+.distance {
+	font-size: 13px;
+	font-weight: 400;
 }
 
 /*

@@ -34,11 +34,11 @@ angular.module('starter')
       $scope.$watch(function () {
         return $ionicSideMenuDelegate.getOpenRatio();
       },
-                    function (ratio) {
-                      if (ratio == 1){
-                        setDistance();
-                      }
-                    });
+      function (ratio) {
+        if (ratio == 1){
+          setDistance();
+        }
+      });
       $scope.itemClicked = function (shop) {
         $scope.mapView.animateTo({target: shop.geometry, zoom: 16});
         $scope.mapView.popup.viewModel.features = [shop];

@@ -1,6 +1,6 @@
 <ion-item class="item-accordion item-toggle item-dark" ng-show="isGroupShown(group)">
   Display
-  <label class="toggle toggle-assertive">
+  <label class="toggle toggle-balanced">
     <input type="checkbox" ng-change="layerToggled(layer, layerVisibility)" ng-model="layerVisibility">
     <div class="track">
       <div class="handle"></div>
@@ -8,8 +8,9 @@
   </label>
 </ion-item>
 <ion-item class="item-accordion"
-          ng-repeat="member in members"
+          ng-repeat="member in members | orderBy: 'attributes.distance'"
           ng-show="isGroupShown(group)"
           ng-click="itemClicked(member)"  menu-close="true">
-  {{member.attributes.name}}
+          {{member.attributes.name}}<br/><span class="distance ion-navigate">Apx. {{member.attributes.distance | number: 1}} mi</span>
+
 </ion-item>

@@ -239,14 +239,14 @@ angular.module('starter.controllers', [])
 
 var gl = new GraphicsLayer();
 map.add(gl);
-
+var locateVm = new LocateVM({
+  view: view,
+  graphicsLayer: gl,
+  trackingEnabled: true,
+  scale: 2400
+});
 var locateBtn = new Locate({
-  viewModel: new LocateVM({
-    view: view,
-    graphicsLayer: gl,
-    trackingEnabled: true,
-    scale: 2400
-  })
+  viewModel: locateVm
 }, "locateDiv");
 locateBtn.startup();
 
