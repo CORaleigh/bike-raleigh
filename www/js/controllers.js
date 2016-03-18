@@ -244,7 +244,7 @@ var locateBtn = new Locate({
   viewModel: new LocateVM({
     view: view,
     graphicsLayer: gl,
-    trackingEnabledBoolean: true,
+    trackingEnabled: true,
     scale: 2400
   })
 }, "locateDiv");
