@@ -164,7 +164,7 @@ angular.module('starter.controllers', [])
       popupTemplate: template,
       renderer: new SimpleRenderer({
         symbol: new PictureMarkerSymbol({
-            url: 'http://localhost:8100/img/shop-marker.svg',
+            url: '/img/shop-marker.svg',
             height: 36,
             width: 36
           })
@@ -196,7 +196,7 @@ angular.module('starter.controllers', [])
       popupTemplate: template,
       renderer: new SimpleRenderer({
         symbol: new PictureMarkerSymbol({
-            url: 'http://localhost:8100/img/parking-marker.svg',
+            url: '/img/parking-marker.svg',
             height: 36,
             width: 36
           })
