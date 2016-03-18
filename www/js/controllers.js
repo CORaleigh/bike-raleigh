@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $rootScope, $ionicModal, $timeout) {
+.controller('AppCtrl', function($scope, $rootScope, $ionicModal, $timeout, MapData, $ionicSideMenuDelegate) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -8,19 +8,21 @@ angular.module('starter.controllers', [])
   // listen for the $ionicView.enter event:
   //$scope.$on('$ionicView.enter', function(e) {
   //});
+  //define group headers
+  $scope.group = null;
+  $scope.sideLoaded = false;
   $scope.groups = [{
     name: "Bike Benefits",
-    items: ['test1', 'test2']
+    layer: null
   }, {
     name: "Bike Shops",
-    items: []
+    layer: null
   }, {
-    name: "Facilities",
-    items: []
+    name: "Facilities"
   }, {
-    name: "Routes",
-    items: []
+    name: "Routes"
   }];
+  //handle group toggle
   $scope.toggleGroup = function(group) {
     if ($scope.isGroupShown(group)) {
       $scope.shownGroup = null;
@@ -32,6 +34,23 @@ angular.module('starter.controllers', [])
   $scope.isGroupShown = function(group) {
     return $scope.shownGroup === group;
   };
+
+  $scope.$on('membersUpdated', function (e, data) {
+    $scope.groups[0].layer = MapData.getMembers();
+  });
+  $scope.$on('bikeShopsUpdated', function (e, data) {
+    $scope.groups[1].layer = MapData.getBikeShops();
+  });
+  $scope.$watch(function () {
+    return $ionicSideMenuDelegate.getOpenRatio();
+  },
+  function (ratio) {
+    if (ratio == 1){
+      $timeout(function () {
+      $scope.sideLoaded = true;
+    }, 500);
+    }
+  });
 })
 
 .controller('MapCtrl', function($scope, MapData, Benefits, $timeout) {
@@ -128,10 +147,6 @@ angular.module('starter.controllers', [])
       MapData.setFacilities(facilities);
     });
     map.add(facilities);
-    //facilities.on("layer-view-create", function(evt){
-    //The LayerView for the layer that emitted this event
-    //     MapData.setFacilities(evt.layerView);
-    // });
 
     //add Greenways
     var greenwayTemplate = new PopupTemplate({
@@ -144,15 +159,15 @@ angular.module('starter.controllers', [])
       outFields: ['NAME', 'MATERIAL'],
       url: "http://services.arcgis.com/v400IkDOw1ad7Yad/arcgis/rest/services/BikeRaleigh/FeatureServer/3"
     });
-
     map.add(greenways);
+
     //add Bike Racks
     var bikeRacks = new FeatureLayer({
       url: "http://services.arcgis.com/v400IkDOw1ad7Yad/arcgis/rest/services/BikeRaleigh/FeatureServer/0"
     });
-
     map.add(bikeRacks);
-    //add Bicycle Benefits businesses to map
+
+    //add Bicycle shops to map
     var template = new PopupTemplate({
       title: "{LABEL}",
       content: "{ADDRESS}" +
@@ -171,18 +186,16 @@ angular.module('starter.controllers', [])
           })
       })
     });
-
-    // $timeout(function () {
-    //   MapData.setBikeShops(view.getLayerView(bikeShops));
-    // }, 4000);
     map.add(bikeShops);
-    //bikeShops.on("layer-view-create", function(evt){
-    //The LayerView for the layer that emitted this event
-    bikeShops.on("layer-view-create", function(evt){
-              //The LayerView for the layer that emitted this event
-              //console.log(evt.layerView.graphics);
+    // bikeShops.on("layer-view-create", function(evt){
+    //   MapData.setBikeShops(evt.layerView);
+    // });
+    view.on("layer-view-create", function(evt) {
+          if (evt.layer.id === "bikeShops") {
+            //Explore the properties of the population layer's layer view here
               MapData.setBikeShops(evt.layerView);
-    });
+          }
+        });
 
     //add Bike Racks
     var template = new PopupTemplate({
@@ -203,9 +216,8 @@ angular.module('starter.controllers', [])
           })
       })
     });
-
     map.add(parking);
-    //});
+
     //add Bicycle Benefits businesses to map
     var benefitTemplate = new PopupTemplate({
       title: "{name}",
@@ -217,7 +229,6 @@ angular.module('starter.controllers', [])
     map.add(benefitsLyr);
     Benefits.getBikeBenefits().then(function (data) {
       var g = null;
-
       for (var i = 0; i < data.members.length;i++) {
         var member = data.members[i];
         g = new Graphic({geometry: new Point({
@@ -234,21 +245,20 @@ angular.module('starter.controllers', [])
       benefitsLyr.add(g);
     }
     MapData.setMembers(benefitsLyr);
-
   });
 
-var gl = new GraphicsLayer();
-map.add(gl);
-var locateVm = new LocateVM({
-  view: view,
-  graphicsLayer: gl,
-  trackingEnabled: true,
-  scale: 2400
-});
-var locateBtn = new Locate({
-  viewModel: locateVm
-}, "locateDiv");
-locateBtn.startup();
+  var gl = new GraphicsLayer();
+  map.add(gl);
+  var locateVm = new LocateVM({
+    view: view,
+    graphicsLayer: gl,
+    trackingEnabled: true,
+    scale: 2400
+  });
+  var locateBtn = new Locate({
+    viewModel: locateVm
+  }, "locateDiv");
+  locateBtn.startup();
 
 });
 })

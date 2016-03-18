@@ -20,21 +20,28 @@
     <ion-content>
        <ion-list>
          <div ng-repeat="group in groups">
-           <ion-item class="item-dark"
-                     ng-click="toggleGroup(group)"
+           <ion-item class="item-dark item-toggle"
+                     ng-click="toggleGroup(group);$event.stopPropagation();"
                      ng-class="{active: isGroupShown(group)}">
                <i class="icon" ng-class="isGroupShown(group) ? 'ion-chevron-up' : 'ion-chevron-down'"></i>
              &nbsp;
              {{group.name}}
+             <label class="toggle toggle-balanced" ng-if="group.layer">
+               <input type="checkbox" ng-click="$event.stopPropagation()" ng-model="group.layer.visible">
+               <div class="track">
+                 <div class="handle"></div>
+               </div>
+             </label>
            </ion-item>
-           <bike-benefits ng-if="group.name === 'Bike Benefits'"></bike-benefits>
-           <bike-shops ng-if="group.name === 'Bike Shops'"></bike-shops>
-           <facilities ng-if="group.name === 'Facilities'"></facilities>
-           <routes ng-if="group.name === 'Routes'"></routes>
-
+           <div ng-show="sideLoaded">
+             <bike-benefits class="list-items" ng-if="group.name === 'Bike Benefits'"></bike-benefits>
+             <bike-shops class="list-items" ng-if="group.name === 'Bike Shops'"></bike-shops>
+             <facilities class="list-items" ng-if="group.name === 'Facilities'"></facilities>
+             <routes class="list-items" ng-if="group.name === 'Routes'"></routes>
+          </div>
          </div>
        </ion-list>
-
+{{group.name}}
      </ion-content>
   </ion-side-menu>
 </ion-side-menus>

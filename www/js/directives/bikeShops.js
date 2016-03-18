@@ -9,7 +9,9 @@ angular.module('starter')
       $scope.layerVisibility = true;
       $scope.$on('bikeShopsUpdated', function (e, data) {
         $scope.layer = MapData.getBikeShops();
-        setDistance();
+        if ($scope.layer.graphics){
+          setDistance();
+        }
       });
       $scope.mapView = null;
       $scope.$on('mapViewCreated', function () {
@@ -19,7 +21,7 @@ angular.module('starter')
         require(["esri/geometry/geometryEngine"], function (geometryEngine) {
           var item = null;
           var dist = 0;
-          for (var i = 0; i < $scope.layer.graphics.items.length; i++) {
+          for (var i = 0; i < $scope.layer.graphics._items.length; i++) {
             item = $scope.layer.graphics.items[i];
             dist = geometryEngine.distance($scope.mapView.center, item.geometry, 'miles');
             item.attributes.distance = dist;

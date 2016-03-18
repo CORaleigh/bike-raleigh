@@ -49,5 +49,12 @@
   display: block !important;
 }
 .item-toggle .toggle {
-	top: 2px !important;
+
+}
+.item-toggle {
+    pointer-events: auto;
+}
+
+.list-items {
+
 }
