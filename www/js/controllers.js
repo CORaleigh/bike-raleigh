@@ -164,7 +164,7 @@ angular.module('starter.controllers', [])
       popupTemplate: template,
       renderer: new SimpleRenderer({
         symbol: new PictureMarkerSymbol({
-            url: '/img/shop-marker.svg',
+            url: 'http://coraleigh.github.io/bike-raleigh/www/img/shop-marker.svg',
             height: 36,
             width: 36
           })
@@ -196,7 +196,7 @@ angular.module('starter.controllers', [])
       popupTemplate: template,
       renderer: new SimpleRenderer({
         symbol: new PictureMarkerSymbol({
-            url: '/img/parking-marker.svg',
+            url: 'http://coraleigh.github.io/bike-raleigh/www/img/parking-marker.svg',
             height: 36,
             width: 36
           })
