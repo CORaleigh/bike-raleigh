@@ -1,0 +1,15 @@
+<ion-view view-title="BikeRaleigh">
+  <ion-nav-bar class="bar-balanced">
+      <ion-nav-buttons side="left">
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+        </button>
+      </ion-nav-buttons>
+      <ion-nav-buttons side="right">
+        <button class="button button-icon button-clear ion-ios-navigate-outline" ng-click="geolocate()" ng-style="{color: ((geolocating) ? 'blue' : 'white')}">
+        </button>
+      </ion-nav-buttons>
+  </ion-nav-bar>
+  <ion-content id="mapContent" scroll="false">
+    <div id="map"></div>
+  </ion-content>
+</ion-view>

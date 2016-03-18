@@ -1,0 +1,40 @@
+/* Empty. Add your own CSS if you like */
+.bar-balanced {
+	background-color: rgb(140, 197, 65) !important;
+}
+#map {
+
+}
+
+/*temp fix to handle popup bug with ArcGIS for JavaScript API 4.0 beta 3*/
+#mapContent.has-header {
+	top: 0;
+}
+.esri-popup .esri-background {
+	background-color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.esri-ui {
+	top: 40px !important;
+}
+
+
+/*
+ * http://docs.angularjs.org/api/ng/directive/ngShow#usage_animations
+ */
+.list .item.item-accordion {
+  line-height: 38px;
+  padding-top: 0;
+  padding-bottom: 0;
+  transition: 0.09s all linear;
+}
+.list .item.item-accordion.ng-hide {
+  line-height: 0px;
+}
+.list .item.item-accordion.ng-hide-add,
+.list .item.item-accordion.ng-hide-remove {
+  display: block !important;
+}
+.item-toggle .toggle {
+	top: 2px !important;
+}

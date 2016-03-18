@@ -1,0 +1,8 @@
+<ion-item class="item-accordion"
+          ng-repeat="item in layer.renderer.infos"
+          ng-show="isGroupShown(group)"
+          ng-click="itemClicked(shop)" menu-close="false">
+          <svg height="6" width="50">
+            <line x1="0" y1="0" x2="50" y2="0" style="stroke:rgb({{item.symbol.color.r}},{{item.symbol.color.g}},{{item.symbol.color.b}});stroke-width:{{item.symbol.width*2}}" />
+          </svg><span style="margin-left: 1em">{{item.label}}</span>
+</ion-item>
