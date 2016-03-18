@@ -225,7 +225,7 @@ angular.module('starter.controllers', [])
         }),
         attributes: {name: member.name, address: member.address, web: member.web, discount: member.discount},
         symbol: new PictureMarkerSymbol({
-            url: '/img/benefit-marker.svg',
+            url: 'http://coraleigh.github.io/bike-raleigh/www/img/benefit-marker.svg',
             height: 36,
             width: 36
           })
