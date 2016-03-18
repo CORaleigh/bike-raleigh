@@ -17,7 +17,11 @@
 .esri-ui {
 	top: 40px !important;
 }
-
+#locateDiv {
+	position: absolute;
+	top: 100px;
+	left: 15px;
+}
 
 /*
  * http://docs.angularjs.org/api/ng/directive/ngShow#usage_animations

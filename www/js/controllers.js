@@ -49,8 +49,10 @@ angular.module('starter.controllers', [])
     "esri/PopupTemplate",
     "esri/widgets/Popup",
     "esri/renderers/SimpleRenderer",
+    "esri/widgets/Locate",
+    "esri/widgets/Locate/LocateViewModel",
     "dojo/domReady!"
-  ], function(Map, MapView, VectorTileLayer, FeatureLayer, GraphicsLayer, Graphic, SimpleMarkerSymbol, PictureMarkerSymbol, SimpleLineSymbol, Point, PopupTemplate, Popup, SimpleRenderer) {
+  ], function(Map, MapView, VectorTileLayer, FeatureLayer, GraphicsLayer, Graphic, SimpleMarkerSymbol, PictureMarkerSymbol, SimpleLineSymbol, Point, PopupTemplate, Popup, SimpleRenderer, Locate, LocateVM) {
 
     var map = new Map();
 
@@ -233,25 +235,20 @@ angular.module('starter.controllers', [])
     MapData.setMembers(benefitsLyr);
 
   });
-  var watchID = 0;
-  $scope.geolocating = false;
-  $scope.geolocate = function () {
-    $scope.geolocating = !$scope.geolocating;
-    if ($scope.geolocating) {
-      watchID = navigator.geolocation.watchPosition(function(position) {
-        var pt = new Point({
-         x: position.coords.longitude,
-         y: position.coords.latitude,
-         spatialReference: 4326
-       });
-       view.animateTo({target: pt, zoom: 16});
-      });
-    } else {
-      navigator.geolocation.clearWatch(watchID);
-    }
 
+var gl = new GraphicsLayer();
+map.add(gl);
 
-  }
+var locateBtn = new Locate({
+  viewModel: new LocateVM({
+    view: view,
+    graphicsLayer: gl,
+    tracking: true,
+    scale: 2400
+  })
+}, "locateDiv");
+locateBtn.startup();
+
 });
 })
 ;
