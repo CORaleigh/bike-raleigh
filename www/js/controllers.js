@@ -85,6 +85,7 @@ angular.module('starter.controllers', [])
       dockAtBreakpoint: false,
       dockPosition: view.popup.viewModel.dockPositions.bottom
     };
+    
     view.popup.viewModel.closestFirst = false;
     view.popup.viewModel.visible = false;
     //add Vector Tile basemap
