@@ -18,6 +18,9 @@ angular.module('starter.controllers', [])
     name: "Bike Shops",
     layer: null
   }, {
+    name: "Greenways",
+    layer: null
+  }, {
     name: "Facilities"
   }, {
     name: "Routes"
@@ -150,13 +153,14 @@ angular.module('starter.controllers', [])
 
     //add Greenways
     var greenwayTemplate = new PopupTemplate({
-      title: "{NAME}",
-      content: "{MATERIAL}"
+      title: "{TRAIL_NAME}",
+      content: "<br/>{LEGACYID}<br/>{MATERIAL}"
     });
     var greenways = new FeatureLayer({
+      id: 'greenways',
       opacity: 0.8,
       popupTemplate: greenwayTemplate,
-      outFields: ['NAME', 'MATERIAL'],
+      outFields: ['TRAIL_NAME', 'LEGACYID', 'MATERIAL'],
       url: "http://services.arcgis.com/v400IkDOw1ad7Yad/arcgis/rest/services/BikeRaleigh/FeatureServer/3"
     });
     map.add(greenways);
@@ -190,12 +194,7 @@ angular.module('starter.controllers', [])
     // bikeShops.on("layer-view-create", function(evt){
     //   MapData.setBikeShops(evt.layerView);
     // });
-    view.on("layer-view-create", function(evt) {
-          if (evt.layer.id === "bikeShops") {
-            //Explore the properties of the population layer's layer view here
-              MapData.setBikeShops(evt.layerView);
-          }
-        });
+
 
     //add Bike Racks
     var template = new PopupTemplate({
@@ -249,11 +248,24 @@ angular.module('starter.controllers', [])
 
   var gl = new GraphicsLayer();
   map.add(gl);
+
+  view.on("layer-view-create", function(evt) {
+    if (evt.layer.id === "bikeShops") {
+      //Explore the properties of the population layer's layer view here
+        MapData.setBikeShops(evt.layerView);
+    } else if (evt.layer.id === "greenways") {
+      MapData.setGreenways(evt.layerView);
+    }
+  });
+
+
   var locateVm = new LocateVM({
     view: view,
     graphicsLayer: gl,
     trackingEnabled: true,
-    scale: 2400
+    scale: 2400,
+    updateScaleEnabled: false,
+    clearOnTrackingStopEnabled: true
   });
   var locateBtn = new Locate({
     viewModel: locateVm

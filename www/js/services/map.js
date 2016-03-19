@@ -4,7 +4,8 @@ angular.module('starter').factory('MapData', function ($rootScope) {
         routes: null,
         members: [],
         mapView: null,
-        bikeShops: null
+        bikeShops: null,
+        greenways: null
     };
     return {
         getMapView: function () {
@@ -41,6 +42,13 @@ angular.module('starter').factory('MapData', function ($rootScope) {
         setBikeShops: function (bikeShops) {
             data.bikeShops = bikeShops;
             $rootScope.$broadcast('bikeShopsUpdated');
+        },
+        getGreenways: function () {
+            return data.greenways;
+        },
+        setGreenways: function (greenways) {
+            data.greenways = greenways;
+            $rootScope.$broadcast('greenwaysUpdated');
         }
     };
 });

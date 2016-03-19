@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <widget id="com.ionicframework.bikeraleigh551316" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-  <name>bike-raleigh</name>
+  <name>BikeRaleigh</name>
   <description>
-        An Ionic Framework and Cordova project.
+    The BikeRaleigh Program encourages biking in Raleigh through on-road facility design, cycling safety and education promotion, and encouragement events. Our primary goal is to promote bicycle use as a viable, attractive, non-polluting form of transportation and assure safe and convenient access to all areas of the City. 
     </description>
-  <author email="you@example.com" href="http://example.com.com/">
-      Your Name Here
+  <author email="gis@raleighnc.gov" href="http://example.com.com/">
+      City of Raleigh GIS
     </author>
   <content src="index.html"/>
   <access origin="*"/>
