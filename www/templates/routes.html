@@ -1,7 +1,7 @@
+<div class="selection-menu">
+
 <ion-item class="item-accordion item-toggle"
-ng-repeat="item in layer.renderer.infos"
-ng-show="isGroupShown(group)"
-ng-click="itemClicked(shop)">
+ng-repeat="item in routeLayer.renderer.infos">
 {{item.label}}
 <label class="toggle toggle-balanced">
   <input type="checkbox" ng-change="toggleLayer(layer, item)" ng-model="item.visible">
@@ -14,3 +14,4 @@ ng-click="itemClicked(shop)">
   <line x1="0" y1="0" x2="243" y2="0" style="stroke:rgb({{item.symbol.color.r}},{{item.symbol.color.g}},{{item.symbol.color.b}});stroke-width:{{item.symbol.width*2}}" />
 </svg>
 </ion-item>
+</div>

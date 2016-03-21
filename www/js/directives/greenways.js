@@ -9,6 +9,7 @@ angular.module('starter')
       $scope.layerVisibility = true;
       $scope.$on('greenwaysUpdated', function (e, data) {
         $scope.layer = MapData.getGreenways();
+        $scope.$parent.greenwaysLyr = $scope.layer;
         if ($scope.layer.graphics){
           setDistance();
         }
@@ -29,7 +30,7 @@ angular.module('starter')
         });
       }
       $scope.$on('menuGroupToggled', function (e, group) {
-        if (group.name === 'Greenways') {
+        if ($scope.currentList  === 'Greenways') {
           setDistance();
         }
       });
