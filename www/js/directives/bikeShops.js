@@ -46,6 +46,8 @@ angular.module('starter')
         }
       });
       $scope.shopClicked = function (shop) {
+        var vm = MapData.getLocateVm();
+        vm._stopTracking();
         $scope.mapView.animateTo({target: shop.geometry, zoom: 16});
         $scope.mapView.popup.viewModel.features = [shop];
         $scope.mapView.popup.viewModel.visible = true;
