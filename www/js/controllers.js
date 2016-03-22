@@ -28,11 +28,14 @@ angular.module('starter.controllers', [])
   // }];
 
 
-  $scope.currentList = '';
+  //$scope.currentList = '';
   $scope.toggleList = function (listName) {
     $scope.currentList = $scope.currentList === listName ? '' : listName;
+    console.log($scope.currentList);
     $rootScope.$broadcast('menuGroupToggled');
   }
+
+
 
   // $scope.toggleList = function (listName) {
   //   $scope.currentList = $scope.currentList === listName ? '' : listName;
@@ -313,9 +316,16 @@ angular.module('starter.controllers', [])
     updateScaleEnabled: false,
     clearOnTrackingStopEnabled: true
   });
+
   var locateBtn = new Locate({
     viewModel: locateVm
   }, "locateDiv");
+    MapData.setLocate(locateBtn);
+    MapData.setLocateVm(locateVm);
+  locateBtn.on('click', function (e) {
+
+  });
+
   locateBtn.startup();
 
 });

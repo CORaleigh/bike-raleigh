@@ -54,11 +54,23 @@
       <ion-item class="item-dark item-toggle" ng-click="toggleList('Bike Routes')">
         <i class="icon ion-chevron-down" ng-class="{rotate: currentList === 'Bike Routes'}"></i>&nbsp;
         Bike Routes
+        <label class="toggle toggle-balanced">
+          <input type="checkbox" ng-click="$event.stopPropagation()" ng-model="routeLyr.visible">
+          <div class="track">
+            <div class="handle"></div>
+          </div>
+        </label>
       </ion-item>
       <routes ng-show="currentList === 'Bike Routes'"></routes>
       <ion-item class="item-dark item-toggle" ng-click="toggleList('Bike Facilities')">
         <i class="icon ion-chevron-down" ng-class="{rotate: currentList === 'Bike Facilities'}"></i>&nbsp;
         Bike Facilities
+        <label class="toggle toggle-balanced">
+          <input type="checkbox" ng-click="$event.stopPropagation()" ng-model="facilityLyr.visible">
+          <div class="track">
+            <div class="handle"></div>
+          </div>
+        </label>
       </ion-item>
       <facilities ng-show="currentList === 'Bike Facilities'"></facilities>
 

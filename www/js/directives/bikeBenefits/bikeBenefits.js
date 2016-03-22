@@ -42,7 +42,9 @@ angular.module('starter')
           setDistance();
         }
       });
-      $scope.itemClicked = function (member) {
+      $scope.memberClicked = function (member) {
+        var vm = MapData.getLocateVm();
+        vm._stopTracking();
         $scope.mapView.animateTo({target: member.geometry, zoom: 16});
         $scope.mapView.popup.viewModel.features = [member];
         $scope.mapView.popup.viewModel.visible = true;

@@ -29,11 +29,11 @@ angular.module('starter')
           }
         });
       }
-      $scope.$on('menuGroupToggled', function (e, group) {
-        if ($scope.currentList  === 'Greenways') {
-          setDistance();
-        }
-      });
+      // $scope.$on('menuGroupToggled', function (e, group) {
+      //   if ($scope.currentList  === 'Greenways') {
+      //     setDistance();
+      //   }
+      // });
       $scope.$watch(function () {
         return $ionicSideMenuDelegate.getOpenRatio();
       },
@@ -42,7 +42,7 @@ angular.module('starter')
           setDistance();
         }
       });
-      $scope.itemClicked = function (shop) {
+      $scope.greenwayClicked = function (shop) {
         $scope.mapView.animateTo({target: shop.geometry, zoom: 16});
         $scope.mapView.popup.viewModel.features = [shop];
         $scope.mapView.popup.viewModel.visible = true;

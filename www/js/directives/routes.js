@@ -8,6 +8,7 @@ angular.module('starter')
 			var expressions = [];
 			$scope.$on('routesUpdated', function () {
 				$scope.routeLayer = MapData.getRoutes();
+				$scope.$parent.routeLyr = $scope.routeLayer;
 				for (var i = 0; i < $scope.routeLayer.renderer.infos.length; i++) {
 					$scope.routeLayer.renderer.infos[i].visible = true;
 					expressions.push($scope.routeLayer.renderer.infos[i].value );

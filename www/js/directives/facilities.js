@@ -8,6 +8,7 @@ angular.module('starter')
 			var expressions = [];
 			$scope.$on('facilitiesUpdated', function () {
 				$scope.facilityLyr = MapData.getFacilities();
+				$scope.$parent.facilityLyr = $scope.facilityLyr;
 				for (var i = 0; i < $scope.facilityLyr.renderer.infos.length; i++) {
 					$scope.facilityLyr.renderer.infos[i].visible = true;
 					expressions.push($scope.facilityLyr.renderer.infos[i].value )
