@@ -1,96 +1,11 @@
 angular.module('starter.controllers', [])
-
 .controller('AppCtrl', function($scope, $rootScope, $ionicModal, $timeout, MapData, $ionicSideMenuDelegate) {
-
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
-  //define group headers
-  // $scope.group = null;
-  // $scope.navGroup = null;
-  // $scope.sideLoaded = false;
-  // $scope.groups = [{
-  //   name: "Bike Benefits",
-  //   layer: null
-  // }, {
-  //   name: "Bike Shops",
-  //   layer: null
-  // }, {
-  //   name: "Greenways",
-  //   layer: null
-  // }, {
-  //   name: "Facilities"
-  // }, {
-  //   name: "Routes"
-  // }];
-
-
-  //$scope.currentList = '';
   $scope.toggleList = function (listName) {
     $scope.currentList = $scope.currentList === listName ? '' : listName;
     console.log($scope.currentList);
     $rootScope.$broadcast('menuGroupToggled');
   }
-
-
-
-  // $scope.toggleList = function (listName) {
-  //   $scope.currentList = $scope.currentList === listName ? '' : listName;
-  //   $rootScope.$broadcast('menuGroupToggled');
-  // };
-  // //handle group toggle
-  // $scope.toggleGroup = function(group) {
-  //   if ($scope.isGroupShown(group)) {
-  //     $scope.shownGroup = null;
-  //   } else {
-  //     $scope.shownGroup = group;
-  //   }
-  //   $rootScope.$broadcast('menuGroupToggled', group);
-  // };
-  // $scope.navGroups = [{
-  //   name: "Set From Location"
-  // }, {
-  //   name: "Set To Location"
-  // }, {
-  //   name: "Directions"
-  // }];
-  // //handle group toggle
-  // $scope.toggleNavGroup = function(group) {
-  //   if ($scope.isNavGroupShown(group)) {
-  //     $scope.shownNavGroup = null;
-  //   } else {
-  //     $scope.shownNavGroup = group;
-  //   }
-  //   $rootScope.$broadcast('navMenuGroupToggled', group);
-  // };
-  // $scope.isNavGroupShown = function(group) {
-  //   return $scope.shownNavGroup === group;
-  // };
-  // $scope.isGroupShown = function(group) {
-  //   return $scope.shownGroup === group;
-  // };
-  //
-  // $scope.$on('membersUpdated', function (e, data) {
-  //   $scope.groups[0].layer = MapData.getMembers();
-  // });
-  // $scope.$on('bikeShopsUpdated', function (e, data) {
-  //   $scope.groups[1].layer = MapData.getBikeShops();
-  // });
-  // $scope.$watch(function () {
-  //   return $ionicSideMenuDelegate.getOpenRatio();
-  // },
-  // function (ratio) {
-  //   if (ratio == 1){
-  //     $timeout(function () {
-  //     $scope.sideLoaded = true;
-  //   }, 1000);
-  //   }
-  // });
 })
-
 .controller('MapCtrl', function($scope, MapData, Benefits, $timeout) {
   require([
     "esri/Map",
@@ -108,22 +23,9 @@ angular.module('starter.controllers', [])
     "esri/renderers/SimpleRenderer",
     "esri/widgets/Locate",
     "esri/widgets/Locate/LocateViewModel",
-    "esri/views/PopupManager",
     "dojo/domReady!"
-  ], function(Map, MapView, VectorTileLayer, FeatureLayer, GraphicsLayer, Graphic, SimpleMarkerSymbol, PictureMarkerSymbol, SimpleLineSymbol, Point, PopupTemplate, Popup, SimpleRenderer, Locate, LocateVM, PopupManager) {
-// PopupManager.prototype._calculateClickTolerance = function(a) {
-//     var b = 100;
-//     m.forEach(a, function(a) {
-//         if (a = a.renderer) "esri.renderer.SimpleRenderer" === a.declaredClass ? ((a = a.symbol) && a.xoffset && (b = Math.max(b,
-//             Math.abs(a.xoffset))), a && a.yoffset && (b = Math.max(b, Math.abs(a.yoffset)))) : ("esri.renderer.UniqueValueRenderer" === a.declaredClass || "esri.renderer.ClassBreaksRenderer" === a.declaredClass) && m.forEach(a.infos, function(a) {
-//             (a = a.symbol) && a.xoffset && (b = Math.max(b, Math.abs(a.xoffset)));
-//             a && a.yoffset && (b = Math.max(b, Math.abs(a.yoffset)))
-//         })
-//     });
-//     return b
-// }
+  ], function(Map, MapView, VectorTileLayer, FeatureLayer, GraphicsLayer, Graphic, SimpleMarkerSymbol, PictureMarkerSymbol, SimpleLineSymbol, Point, PopupTemplate, Popup, SimpleRenderer, Locate, LocateVM) {
     var map = new Map();
-
     var view = new MapView({
       container: "map",
       map: map,
@@ -140,15 +42,6 @@ angular.module('starter.controllers', [])
       view.maxZoom = 19;
       view.popup.viewModel.docked = true;
       MapData.setMapView(view);
-      //  navigator.geolocation.getCurrentPosition(function(position) {
-      //    var pt = new Point({
-      //     x: position.coords.longitude,
-      //     y: position.coords.latitude,
-      //     spatialReference: 4326
-      //   });
-      //   view.center = pt;
-      //   view.zoom = 16;
-      //  });
     });
     view.popup.viewModel.dockOptions = {
       responsiveDockEnabled: false,
@@ -240,11 +133,6 @@ angular.module('starter.controllers', [])
       })
     });
     map.add(bikeShops);
-    // bikeShops.on("layer-view-create", function(evt){
-    //   MapData.setBikeShops(evt.layerView);
-    // });
-
-
     //add Bike Racks
     var template = new PopupTemplate({
       title: "{TYPE}",
@@ -300,20 +188,17 @@ angular.module('starter.controllers', [])
 
   view.on("layer-view-create", function(evt) {
     if (evt.layer.id === "bikeShops") {
-      //Explore the properties of the population layer's layer view here
         MapData.setBikeShops(evt.layerView);
     } else if (evt.layer.id === "greenways") {
       MapData.setGreenways(evt.layerView);
     }
   });
-
-
   var locateVm = new LocateVM({
     view: view,
     graphicsLayer: gl,
     trackingEnabled: true,
     scale: 2400,
-    updateScaleEnabled: false,
+    updateScaleEnabled: true,
     clearOnTrackingStopEnabled: true
   });
 
@@ -325,9 +210,6 @@ angular.module('starter.controllers', [])
   locateBtn.on('click', function (e) {
 
   });
-
   locateBtn.startup();
-
 });
-})
-;
+});
