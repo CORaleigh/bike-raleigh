@@ -7,13 +7,21 @@
     background-color: rgb(140, 197, 65) !important;
 }
 #map {
-
+	width: 100%;
+	height: 100%;
 }
 
 /*temp fix to handle popup bug with ArcGIS for JavaScript API 4.0 beta 3*/
 #mapContent.has-header {
 	top: 0;
 }
+
+#mapContent .scroll {
+	width: 100%;
+	height: 100%;
+}
+
+
 .esri-popup .esri-background {
 	background-color: rgba(255, 255, 255, 0.9) !important;
 }
