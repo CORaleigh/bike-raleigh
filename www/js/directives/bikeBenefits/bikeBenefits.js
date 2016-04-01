@@ -6,7 +6,7 @@ angular.module('starter')
     controller: function ($scope, $rootScope, MapData, $ionicSideMenuDelegate) {
       $scope.members = null;
       $scope.layer = null;
-      $scope.mapView = null;
+      $scope.map = null;
       $scope.layerVisibility = true;
       $scope.$on('membersUpdated', function () {
         $scope.benefitsLyr = MapData.getMembers();
@@ -14,17 +14,16 @@ angular.module('starter')
       });
       $scope.mapView = null;
       $scope.$on('mapViewCreated', function () {
-        $scope.mapView = MapData.getMapView();
-        setDistance();
+        $scope.map = MapData.getMapView();
+      //  setDistance();
       });
       var setDistance = function () {
-        console.log($scope.mapView.center.x);
-        require(["esri/geometry/geometryEngine", "esri/geometry/support/webMercatorUtils"], function (geometryEngine, webMercatorUtils) {
+        require(["esri/geometry/geometryEngine", "esri/geometry/webMercatorUtils"], function (geometryEngine, webMercatorUtils) {
           var item = null;
           var dist = 0;
-          for (var i = 0; i < $scope.benefitsLyr.graphics._items.length; i++) {
-            item = $scope.benefitsLyr.graphics.items[i];
-            dist = geometryEngine.distance($scope.mapView.center, webMercatorUtils.geographicToWebMercator(item.geometry), 'miles');
+          for (var i = 0; i < $scope.benefitsLyr.graphics.length; i++) {
+            item = $scope.benefitsLyr.graphics[i];
+            dist = geometryEngine.distance($scope.map.extent.getCenter(), webMercatorUtils.geographicToWebMercator(item.geometry), 'miles');
             item.attributes.distance = dist;
           }
         });

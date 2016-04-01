@@ -10,9 +10,9 @@ angular.module('starter')
       $scope.$on('bikeShopsUpdated', function (e, data) {
         $scope.shopsLyr = MapData.getBikeShops();
         $scope.$parent.shopsLyr = MapData.getBikeShops();
-        if ($scope.layer.graphics){
-          setDistance();
-        }
+        //if ($scope.layer.graphics){
+          //setDistance();
+        //}
       });
       $scope.mapView = null;
       $scope.$on('mapViewCreated', function () {
@@ -22,11 +22,11 @@ angular.module('starter')
         require(["esri/geometry/geometryEngine"], function (geometryEngine) {
           var item = null;
           var dist = 0;
-          for (var i = 0; i < $scope.layer.graphics._items.length; i++) {
+          for (var i = 0; i < $scope.shopsLyr.graphics.length; i++) {
 
-            item = $scope.shopsLyr.graphics._items[i];
+            item = $scope.shopsLyr.graphics[i];
             if (item){
-            dist = geometryEngine.distance($scope.mapView.center, item.geometry, 'miles');
+            dist = geometryEngine.distance($scope.mapView.extent.getCenter(), item.geometry, 'miles');
             item.attributes.distance = dist;
           }
           }

@@ -1,6 +1,6 @@
 <div class="selection-menu">
   <ion-item class="item-accordion"
-          ng-repeat="member in benefitsLyr.graphics.items | orderBy: 'attributes.distance'"
+          ng-repeat="member in benefitsLyr.graphics | orderBy: 'attributes.distance'"
           ng-click="memberClicked(member)"  menu-close="true">
           {{member.attributes.name}}<br/><span class="distance ion-navigate">Apx. {{member.attributes.distance | number: 1}} mi</span>
  </ion-item>

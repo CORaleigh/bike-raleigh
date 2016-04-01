@@ -23,9 +23,14 @@ angular.module('starter.controllers', [])
      "esri/renderers/SimpleRenderer",
     // "esri/widgets/Locate",
     // "esri/widgets/Locate/LocateViewModel",
+    "dojo/on",
     "dojo/domReady!"
-  ], function(Map, VectorTileLayer, FeatureLayer, GraphicsLayer, Graphic, PictureMarkerSymbol, Point, SimpleRenderer) {//, FeatureLayer, GraphicsLayer, Graphic, SimpleMarkerSymbol, PictureMarkerSymbol, SimpleLineSymbol, Point, PopupTemplate, Popup, SimpleRenderer, Locate, LocateVM) {
+  ], function(Map, VectorTileLayer, FeatureLayer, GraphicsLayer, Graphic, PictureMarkerSymbol, Point, SimpleRenderer, on) {//, FeatureLayer, GraphicsLayer, Graphic, SimpleMarkerSymbol, PictureMarkerSymbol, SimpleLineSymbol, Point, PopupTemplate, Popup, SimpleRenderer, Locate, LocateVM) {
     var map = new Map("map", {center: [-78.68, 35.82], zoom: 12});
+
+    map.on('load', function () {
+      MapData.setMapView(map);
+    })
   //   $scope.zIndex = 10;
   //   $scope.$watch('zIndex', function (o, n) {
   //     if (o) {
@@ -160,7 +165,7 @@ angular.module('starter.controllers', [])
   //   map.add(bikeShops);
   var bikeShops = new FeatureLayer(
     "http://mapstest.raleighnc.gov/arcgis/rest/services/Transportation/BikeRaleigh/MapServer/0",
-    {outFields: ['LABEL', 'ADDRESS', 'URL']}
+    {outFields: ['LABEL', 'ADDRESS', 'URL'], mode: FeatureLayer.MODE_SNAPSHOT}
   );
   bikeShops.setRenderer(new SimpleRenderer({
     symbol: new PictureMarkerSymbol({
@@ -170,6 +175,9 @@ angular.module('starter.controllers', [])
       })
   }));
   map.addLayer(bikeShops);
+  bikeShops.on('load', function () {
+    MapData.setBikeShops(bikeShops);
+  });
   //   //add Bike Racks
   //   var template = new PopupTemplate({
   //     title: "{TYPE}",
@@ -232,7 +240,7 @@ angular.module('starter.controllers', [])
       );
       benefitsLyr.add(g);
     }
-    //MapData.setMembers(benefitsLyr);
+    MapData.setMembers(benefitsLyr);
   });
 
   // var gl = new GraphicsLayer();
