@@ -6,7 +6,7 @@ angular.module('starter.controllers', [])
     $rootScope.$broadcast('menuGroupToggled');
   }
 })
-.controller('MapCtrl', function($scope, MapData, Benefits, $timeout) {
+.controller('MapCtrl', function($scope, MapData, Benefits, $timeout, $cordovaInAppBrowser) {
   require([
     "esri/Map",
     "esri/views/MapView",
@@ -26,6 +26,14 @@ angular.module('starter.controllers', [])
     "dojo/domReady!"
   ], function(Map, MapView, VectorTileLayer, FeatureLayer, GraphicsLayer, Graphic, SimpleMarkerSymbol, PictureMarkerSymbol, SimpleLineSymbol, Point, PopupTemplate, Popup, SimpleRenderer, Locate, LocateVM) {
     var map = new Map();
+    $scope.zIndex = 10;
+    $scope.$watch('zIndex', function (o, n) {
+      if (o) {
+       console.log(o);
+      console.log(n);       
+      }
+
+    });
     var view = new MapView({
       container: "map",
       map: map,
@@ -154,12 +162,16 @@ angular.module('starter.controllers', [])
     });
     map.add(parking);
 
+    function openUrl () {
+      console.log('URL');
+    }
+
     //add Bicycle Benefits businesses to map
     var benefitTemplate = new PopupTemplate({
       title: "{name}",
       content: "{address}" +
       "<br>{discount}" +
-      "<br><a href='{web}' target='_blank'>Website</a>"
+      "<br><a id='link' href='{web}' >Website</a>"
     });
     var benefitsLyr = new GraphicsLayer({popupTemplate: benefitTemplate});
     map.add(benefitsLyr);
@@ -211,5 +223,6 @@ angular.module('starter.controllers', [])
 
   });
   locateBtn.startup();
+
 });
 });
