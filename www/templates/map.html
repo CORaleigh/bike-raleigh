@@ -13,6 +13,11 @@
       </ion-nav-buttons> -->
   </ion-nav-bar>
   <ion-content id="mapContent" data-tap-disabled="true">
-    <div id="map"><!-- <div id="locateDiv" ng-style="{'z-index': zIndex}"></div> --></div>
+    <div id="map"><div id="locateDiv"></div></div>
+    <div id="popup" ng-show="showPopup">
+      <a class="button button-icon icon ion-close-round" ng-click="closePopup()"></a>
+      <strong>{{popupTitle}}</strong>
+      <p ng-bind-html="popupContent"></p>
+    </div>
   </ion-content>
 </ion-view>

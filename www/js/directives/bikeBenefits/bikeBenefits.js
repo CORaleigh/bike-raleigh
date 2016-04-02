@@ -50,8 +50,14 @@ angular.module('starter')
         $scope.mapView.popup.viewModel.location = member.geometry;
       };
       $scope.layerToggled = function (layer, visible) {
-        layer.visible = visible;
+        //layer.visible = visible;
+        layer.setVisibility(visible);
       }
+      // $scope.$watch('benefitsLyr.visible', function (newValue, oldValue) {
+      //   if ($scope.benefitsLyr) {
+      //     $scope.benefitsLyr.setVisibility(!newValue);
+      //   }
+      // });
     }
   }
 });

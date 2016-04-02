@@ -10,9 +10,9 @@ angular.module('starter')
       $scope.$on('greenwaysUpdated', function (e, data) {
         $scope.layer = MapData.getGreenways();
         $scope.$parent.greenwaysLyr = $scope.layer;
-        if ($scope.layer.graphics){
-          setDistance();
-        }
+        // if ($scope.layer.graphics){
+        //   setDistance();
+        // }
       });
       $scope.mapView = null;
       $scope.$on('mapViewCreated', function () {
@@ -22,9 +22,9 @@ angular.module('starter')
         require(["esri/geometry/geometryEngine"], function (geometryEngine) {
           var item = null;
           var dist = 0;
-          for (var i = 0; i < $scope.layer.graphics._items.length; i++) {
-            item = $scope.layer.graphics.items[i];
-            dist = geometryEngine.distance($scope.mapView.center, item.geometry, 'miles');
+          for (var i = 0; i < $scope.layer.graphics.length; i++) {
+            item = $scope.layer.graphics[i];
+            dist = geometryEngine.distance($scope.mapView.extent.getCenter(), item.geometry, 'miles');
             item.attributes.distance = dist;
           }
         });

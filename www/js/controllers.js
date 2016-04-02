@@ -21,13 +21,14 @@ angular.module('starter.controllers', [])
     // "esri/PopupTemplate",
     // "esri/widgets/Popup",
      "esri/renderers/SimpleRenderer",
-    // "esri/widgets/Locate",
+   // "esri/widgets/Locate",
     // "esri/widgets/Locate/LocateViewModel",
+    "esri/dijit/LocateButton",
     "dojo/on",
     "dojo/domReady!"
-  ], function(Map, VectorTileLayer, FeatureLayer, GraphicsLayer, Graphic, PictureMarkerSymbol, Point, SimpleRenderer, on) {//, FeatureLayer, GraphicsLayer, Graphic, SimpleMarkerSymbol, PictureMarkerSymbol, SimpleLineSymbol, Point, PopupTemplate, Popup, SimpleRenderer, Locate, LocateVM) {
-    var map = new Map("map", {center: [-78.68, 35.82], zoom: 12});
-
+  ], function(Map, VectorTileLayer, FeatureLayer, GraphicsLayer, Graphic, PictureMarkerSymbol, Point, SimpleRenderer, LocateButton, on) {//, FeatureLayer, GraphicsLayer, Graphic, SimpleMarkerSymbol, PictureMarkerSymbol, SimpleLineSymbol, Point, PopupTemplate, Popup, SimpleRenderer, Locate, LocateVM) {
+    var map = new Map("map", {center: [-78.68, 35.82], zoom: 12, logo: false});
+    $scope.showPopup = false;
     map.on('load', function () {
       MapData.setMapView(map);
     })
@@ -86,7 +87,9 @@ angular.module('starter.controllers', [])
     {opacity: 0.8, outFields: ['TYPE', 'Comfort']}
   );
   map.addLayer(routes);
-
+  routes.on('load', function () {
+    MapData.setRoutes(routes);
+  });
   //   routes.then(function () {
   //     MapData.setRoutes(routes);
   //   });
@@ -110,6 +113,16 @@ angular.module('starter.controllers', [])
     {opacity: 0.8, outFields: ['FaclType', 'From_', 'To_', 'Road', 'Yr_Install']}
   );
   map.addLayer(facilities);
+  facilities.on('load', function () {
+    MapData.setFacilities(facilities);
+  });
+  facilities.on('click', function (evt) {
+      $scope.popupTitle = evt.graphic.attributes.FaclType;
+      $scope.showPopup = true;
+      $scope.popupContent = 'On <em>' + evt.graphic.attributes.Road + '</em> from <em>' + evt.graphic.attributes.From_ + '</em> to <em>' + evt.graphic.attributes.To_ + '</em>' +
+        "<br>" + ((evt.graphic.attributes.Yr_Install) ? 'Installed in ' + evt.graphic.attributes.Yr_Install : '');
+      $scope.$apply();
+  });
   //   facilities.then(function () {
   //     MapData.setFacilities(facilities);
   //   });
@@ -133,6 +146,16 @@ angular.module('starter.controllers', [])
     {opacity: 0.8, outFields: ['TRAIL_NAME', 'LEGACYID', 'MATERIAL']}
   );
   map.addLayer(greenways);
+  greenways.on('load', function () {
+    MapData.setGreenways(greenways);
+  });
+  greenways.on('click', function (evt) {
+      $scope.popupTitle = evt.graphic.attributes.TRAIL_NAME;
+      $scope.showPopup = true;
+      $scope.popupContent = evt.graphic.attributes.LEGACYID +
+        "<br>" + ((evt.graphic.attributes.MATERIAL) ? evt.graphic.attributes.MATERIAL : '');
+      $scope.$apply();
+  });
   //   //add Bike Racks
   //   var bikeRacks = new FeatureLayer({
   //     url: "http://services.arcgis.com/v400IkDOw1ad7Yad/arcgis/rest/services/BikeRaleigh/FeatureServer/0"
@@ -175,6 +198,13 @@ angular.module('starter.controllers', [])
       })
   }));
   map.addLayer(bikeShops);
+  bikeShops.on('click', function (evt) {
+      $scope.popupTitle = evt.graphic.attributes.LABEL;
+      $scope.showPopup = true;
+      $scope.popupContent = evt.graphic.attributes.ADDRESS +
+          "<br><a href='" + evt.graphic.attributes.URL + "'>Website</a>"
+      //$scope.$apply();
+  });
   bikeShops.on('load', function () {
     MapData.setBikeShops(bikeShops);
   });
@@ -200,8 +230,16 @@ angular.module('starter.controllers', [])
   //   map.add(parking);
   var parking = new FeatureLayer(
     "http://mapstest.raleighnc.gov/arcgis/rest/services/Transportation/BikeRaleigh/MapServer/1",
-    {outFields: ['TYPE', 'ADDRESS', 'STATUS', 'DIRECTIO', 'BETWEEN']}
+    {outFields: ['TYPE', 'ADDRESS', 'STATUS', 'DIRECTIO', 'BETWEEN_']}
   );
+  parking.on('click', function (evt) {
+      $scope.popupTitle = evt.graphic.attributes.TYPE;
+      $scope.showPopup = true;
+      $scope.popupContent = evt.graphic.attributes.ADDRESS +
+        "<br>" + evt.graphic.attributes.DIRECTIO +
+        "<br>" + ((evt.graphic.attributes.BETWEEEN_) ? evt.graphic.attributes.BETWEEEN_ : '');
+      //$scope.$apply();
+  });
   parking.setRenderer(new SimpleRenderer({
     symbol: new PictureMarkerSymbol({
         url: 'http://coraleigh.github.io/bike-raleigh/www/img/parking-marker.svg',
@@ -223,6 +261,15 @@ angular.module('starter.controllers', [])
   //   });
      var benefitsLyr = new GraphicsLayer();
     map.addLayer(benefitsLyr);
+    benefitsLyr.on('click', function (evt) {
+        $scope.popupTitle = evt.graphic.attributes.name;
+        $scope.showPopup = true;
+        $scope.popupContent = evt.graphic.attributes.address +
+          "<br>" + evt.graphic.attributes.discount +
+          "<br><a href='" + evt.graphic.attributes.web + "'>Website</a>"
+        //$scope.$apply();
+    });
+
     Benefits.getBikeBenefits().then(function (data) {
       var g = null;
       for (var i = 0; i < data.members.length;i++) {
@@ -262,15 +309,16 @@ angular.module('starter.controllers', [])
   //   clearOnTrackingStopEnabled: true
   // });
 
-  // var locateBtn = new Locate({
-  //   viewModel: locateVm
-  // }, "locateDiv");
-  //   MapData.setLocate(locateBtn);
-  //   MapData.setLocateVm(locateVm);
-  // locateBtn.on('click', function (e) {
-
-  // });
-  // locateBtn.startup();
-
+  var geoLocate = new LocateButton({
+    map: map,
+    highlightLocation: true,
+    useTracking: true,
+    centerAt: true
+  }, "locateDiv"
+  );
+  geoLocate.startup();
+  $scope.closePopup = function () {
+    $scope.showPopup = false;
+  };
 });
 });
