@@ -7,7 +7,8 @@ angular.module('starter').factory('MapData', function ($rootScope) {
         bikeShops: null,
         greenways: null,
         locator: null,
-        locateVm: null
+        locateVm: null,
+        locationLayer: null
     };
     return {
         getMapView: function () {
@@ -63,6 +64,13 @@ angular.module('starter').factory('MapData', function ($rootScope) {
         },
         setLocateVm: function (locateVm) {
           data.locateVm = locateVm;
+        },
+        getLocationLayer: function () {
+          return data.locationLayer;
+        },
+        setLocationLayer: function (locationLayer) {
+          data.locationLayer = locationLayer;
+          $rootScope.$broadcast('locationLayerCreated');
         }
     };
 });

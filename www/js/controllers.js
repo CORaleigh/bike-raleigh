@@ -4,7 +4,20 @@ angular.module('starter.controllers', [])
     $scope.currentList = $scope.currentList === listName ? '' : listName;
     console.log($scope.currentList);
     $rootScope.$broadcast('menuGroupToggled');
-  }
+  };
+  $scope.zIndex = 10;
+  $scope.$watch(function () {
+  return $ionicSideMenuDelegate.getOpenRatio();
+},
+function (ratio) {
+  //if (ratio === 1){
+$timeout(function () {
+  console.log($scope.zIndex)
+    $scope.zIndex += 1;
+    angular.element(document.querySelector('#locateDiv')).css('z-index', $scope.zIndex);
+});
+  //}
+});
 })
 .controller('MapCtrl', function($scope, MapData, Benefits, $timeout, $cordovaInAppBrowser) {
   require([
@@ -26,11 +39,11 @@ angular.module('starter.controllers', [])
     "dojo/domReady!"
   ], function(Map, MapView, VectorTileLayer, FeatureLayer, GraphicsLayer, Graphic, SimpleMarkerSymbol, PictureMarkerSymbol, SimpleLineSymbol, Point, PopupTemplate, Popup, SimpleRenderer, Locate, LocateVM) {
     var map = new Map();
-    $scope.zIndex = 10;
+
     $scope.$watch('zIndex', function (o, n) {
       if (o) {
        console.log(o);
-      console.log(n);       
+      console.log(n);
       }
 
     });
@@ -39,6 +52,9 @@ angular.module('starter.controllers', [])
       map: map,
       zoom: 12,
       center: [-78.68, 35.82],
+      constraints: {
+        maxZoom: 18
+      },
       ui: {
         components: ["compass"]
       }
@@ -62,7 +78,7 @@ angular.module('starter.controllers', [])
     view.popup.viewModel.visible = false;
     //add Vector Tile basemap
     var tileLyr = new VectorTileLayer({
-      url: "http://tiles.arcgis.com/tiles/v400IkDOw1ad7Yad/arcgis/rest/services/Vector_Tile_Basemap/VectorTileServer/resources/styles/root.json"
+      url: "http://ral.maps.arcgis.com/sharing/rest/content/items/f6f7665880c94539842f4cc46cfe6c1d/resources/styles/root.json"
     });
     map.add(tileLyr);
 
@@ -205,6 +221,10 @@ angular.module('starter.controllers', [])
       MapData.setGreenways(evt.layerView);
     }
   });
+
+  gl = new GraphicsLayer();
+  map.add(gl);
+  MapData.setLocationLayer(gl);
   var locateVm = new LocateVM({
     view: view,
     graphicsLayer: gl,
