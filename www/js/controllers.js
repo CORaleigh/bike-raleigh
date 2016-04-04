@@ -182,6 +182,24 @@ $timeout(function () {
       console.log('URL');
     }
 
+    var trailheads = new FeatureLayer({
+      id: "trailheads",
+      url: "http://services.arcgis.com/v400IkDOw1ad7Yad/arcgis/rest/services/GreenwayTrailheads/FeatureServer/0",
+      outFields: ['TrailName', 'SegmentName', 'RoadCrossing', 'Access', 'TrailheadID'],
+      popupTemplate: template,
+      renderer: new SimpleRenderer({
+        symbol: new PictureMarkerSymbol({
+            url: 'http://coraleigh.github.io/bike-raleigh/www/img/park-marker.svg',
+            height: 36,
+            width: 36
+          })
+      })
+    });
+    map.add(trailheads);
+
+    function openUrl () {
+      console.log('URL');
+    }
     //add Bicycle Benefits businesses to map
     var benefitTemplate = new PopupTemplate({
       title: "{name}",
@@ -219,6 +237,8 @@ $timeout(function () {
         MapData.setBikeShops(evt.layerView);
     } else if (evt.layer.id === "greenways") {
       MapData.setGreenways(evt.layerView);
+    } else if (evt.layer.id === "trailheads") {
+      MapData.setTrailheads(evt.layerView);
     }
   });
 
@@ -234,15 +254,15 @@ $timeout(function () {
     clearOnTrackingStopEnabled: true
   });
 
-  var locateBtn = new Locate({
-    viewModel: locateVm
-  }, "locateDiv");
-    MapData.setLocate(locateBtn);
-    MapData.setLocateVm(locateVm);
-  locateBtn.on('click', function (e) {
-
-  });
-  locateBtn.startup();
+  // var locateBtn = new Locate({
+  //   viewModel: locateVm
+  // }, "locateDiv");
+  //   MapData.setLocate(locateBtn);
+  //   MapData.setLocateVm(locateVm);
+  // locateBtn.on('click', function (e) {
+  //
+  // });
+  // locateBtn.startup();
 
 });
 });

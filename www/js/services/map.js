@@ -6,6 +6,7 @@ angular.module('starter').factory('MapData', function ($rootScope) {
         mapView: null,
         bikeShops: null,
         greenways: null,
+        trailheads: null,
         locator: null,
         locateVm: null,
         locationLayer: null
@@ -52,6 +53,13 @@ angular.module('starter').factory('MapData', function ($rootScope) {
         setGreenways: function (greenways) {
             data.greenways = greenways;
             $rootScope.$broadcast('greenwaysUpdated');
+        },
+        getTrailheads: function () {
+            return data.trailheads;
+        },
+        setTrailheads: function (trailheads) {
+            data.trailheads = trailheads;
+            $rootScope.$broadcast('trailheadsUpdated');
         },
         getLocate: function () {
           return data.locate;
