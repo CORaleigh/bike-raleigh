@@ -4,15 +4,16 @@ angular.module('starter')
 		templateUrl: 'templates/facilities.html',
 		restrict: 'E',
 		controller: function ($scope, $rootScope, MapData) {
-			$scope.layer = null;
+			$scope.facilityLyr = null;
 			var expressions = [];
 			$scope.$on('facilitiesUpdated', function () {
-				$scope.layer = MapData.getFacilities();
-				for (var i = 0; i < $scope.layer.renderer.infos.length; i++) {
-					$scope.layer.renderer.infos[i].visible = true;
-					expressions.push($scope.layer.renderer.infos[i].value )
+				$scope.facilityLyr = MapData.getFacilities();
+				$scope.$parent.facilityLyr = $scope.facilityLyr;
+				for (var i = 0; i < $scope.facilityLyr.renderer.infos.length; i++) {
+					$scope.facilityLyr.renderer.infos[i].visible = true;
+					expressions.push($scope.facilityLyr.renderer.infos[i].value )
 				}
-				console.log($scope.layer.renderer.infos);
+				console.log($scope.facilityLyr.renderer.infos);
 			});
 			$scope.toggleLayer = function (layer, item) {
 				if (!item.visible && expressions.indexOf(item.value) > -1) {

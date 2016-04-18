@@ -9,6 +9,7 @@ angular.module('starter')
       $scope.layerVisibility = true;
       $scope.$on('greenwaysUpdated', function (e, data) {
         $scope.layer = MapData.getGreenways();
+        $scope.$parent.greenwaysLyr = $scope.layer;
         if ($scope.layer.graphics){
           setDistance();
         }
@@ -28,11 +29,11 @@ angular.module('starter')
           }
         });
       }
-      $scope.$on('menuGroupToggled', function (e, group) {
-        if (group.name === 'Greenways') {
-          setDistance();
-        }
-      });
+      // $scope.$on('menuGroupToggled', function (e, group) {
+      //   if ($scope.currentList  === 'Greenways') {
+      //     setDistance();
+      //   }
+      // });
       $scope.$watch(function () {
         return $ionicSideMenuDelegate.getOpenRatio();
       },
@@ -41,7 +42,9 @@ angular.module('starter')
           setDistance();
         }
       });
-      $scope.itemClicked = function (shop) {
+      $scope.greenwayClicked = function (shop) {
+        var vm = MapData.getLocateVm();
+        vm._stopTracking();
         $scope.mapView.animateTo({target: shop.geometry, zoom: 16});
         $scope.mapView.popup.viewModel.features = [shop];
         $scope.mapView.popup.viewModel.visible = true;

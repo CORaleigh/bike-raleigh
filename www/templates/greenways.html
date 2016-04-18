@@ -1,6 +1,7 @@
-<ion-item class="item-accordion"
-          ng-repeat="greenway in layer.graphics._items | orderBy: 'attributes.distance'"
-          ng-show="isGroupShown(group)"
-          ng-click="itemClicked(greenway)" menu-close="true">
-  {{greenway.attributes.TRAIL_NAME}}<br/><span style="font-size: smaller">{{greenway.attributes.LEGACYID}}</span><br/><span class="distance ion-navigate">Apx. {{greenway.attributes.distance | number: 1}} mi</span>
-</ion-item>
+<div class="selection-menu">
+  <ion-item class="item-accordion"
+            ng-repeat="greenway in layer.graphics._items | orderBy: 'attributes.distance'"
+            ng-click="greenwayClicked(greenway)" menu-close="true">
+    {{greenway.attributes.TRAIL_NAME}}<br/><span style="font-size: smaller">{{greenway.attributes.LEGACYID}}</span><br/><span class="distance ion-navigate">Apx. {{greenway.attributes.distance | number: 1}} mi</span>
+  </ion-item>
+</div>

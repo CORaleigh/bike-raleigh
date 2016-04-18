@@ -9,8 +9,8 @@ angular.module('starter')
       $scope.mapView = null;
       $scope.layerVisibility = true;
       $scope.$on('membersUpdated', function () {
-        $scope.layer = MapData.getMembers();
-        $scope.members = MapData.getMembers().graphics.items;
+        $scope.benefitsLyr = MapData.getMembers();
+        $scope.$parent.benefitsLyr = $scope.layer;
       });
       $scope.mapView = null;
       $scope.$on('mapViewCreated', function () {
@@ -18,18 +18,19 @@ angular.module('starter')
         setDistance();
       });
       var setDistance = function () {
+        console.log($scope.mapView.center.x);
         require(["esri/geometry/geometryEngine", "esri/geometry/support/webMercatorUtils"], function (geometryEngine, webMercatorUtils) {
           var item = null;
           var dist = 0;
-          for (var i = 0; i < $scope.layer.graphics.items.length; i++) {
-            item = $scope.layer.graphics.items[i];
+          for (var i = 0; i < $scope.benefitsLyr.graphics._items.length; i++) {
+            item = $scope.benefitsLyr.graphics.items[i];
             dist = geometryEngine.distance($scope.mapView.center, webMercatorUtils.geographicToWebMercator(item.geometry), 'miles');
             item.attributes.distance = dist;
           }
         });
       }
       $scope.$on('menuGroupToggled', function (e, group) {
-        if (group.name === 'Bike Benefits') {
+        if ($scope.currentList === 'Bike Benefits') {
           setDistance();
         }
       });
@@ -41,7 +42,9 @@ angular.module('starter')
           setDistance();
         }
       });
-      $scope.itemClicked = function (member) {
+      $scope.memberClicked = function (member) {
+        var vm = MapData.getLocateVm();
+        vm._stopTracking();
         $scope.mapView.animateTo({target: member.geometry, zoom: 16});
         $scope.mapView.popup.viewModel.features = [member];
         $scope.mapView.popup.viewModel.visible = true;

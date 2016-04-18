@@ -4,11 +4,12 @@ angular.module('starter')
     templateUrl: 'templates/bikeShops.html',
     restrict: 'E',
     controller: function ($scope, $rootScope, MapData, $ionicSideMenuDelegate ) {
-      $scope.layer = null;
+      $scope.shopsLyr = null;
       $scope.mapView = null;
       $scope.layerVisibility = true;
       $scope.$on('bikeShopsUpdated', function (e, data) {
-        $scope.layer = MapData.getBikeShops();
+        $scope.shopsLyr = MapData.getBikeShops();
+        $scope.$parent.shopsLyr = MapData.getBikeShops();
         if ($scope.layer.graphics){
           setDistance();
         }
@@ -22,14 +23,17 @@ angular.module('starter')
           var item = null;
           var dist = 0;
           for (var i = 0; i < $scope.layer.graphics._items.length; i++) {
-            item = $scope.layer.graphics.items[i];
+
+            item = $scope.shopsLyr.graphics._items[i];
+            if (item){
             dist = geometryEngine.distance($scope.mapView.center, item.geometry, 'miles');
             item.attributes.distance = dist;
+          }
           }
         });
       }
       $scope.$on('menuGroupToggled', function (e, group) {
-        if (group.name === 'Bike Shops') {
+        if ($scope.currentList  === 'Bike Shops') {
           setDistance();
         }
       });
@@ -41,7 +45,9 @@ angular.module('starter')
           setDistance();
         }
       });
-      $scope.itemClicked = function (shop) {
+      $scope.shopClicked = function (shop) {
+        var vm = MapData.getLocateVm();
+        vm._stopTracking();
         $scope.mapView.animateTo({target: shop.geometry, zoom: 16});
         $scope.mapView.popup.viewModel.features = [shop];
         $scope.mapView.popup.viewModel.visible = true;

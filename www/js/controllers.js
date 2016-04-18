@@ -1,62 +1,25 @@
 angular.module('starter.controllers', [])
-
 .controller('AppCtrl', function($scope, $rootScope, $ionicModal, $timeout, MapData, $ionicSideMenuDelegate) {
-
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
-  //define group headers
-  $scope.group = null;
-  $scope.sideLoaded = false;
-  $scope.groups = [{
-    name: "Bike Benefits",
-    layer: null
-  }, {
-    name: "Bike Shops",
-    layer: null
-  }, {
-    name: "Greenways",
-    layer: null
-  }, {
-    name: "Facilities"
-  }, {
-    name: "Routes"
-  }];
-  //handle group toggle
-  $scope.toggleGroup = function(group) {
-    if ($scope.isGroupShown(group)) {
-      $scope.shownGroup = null;
-    } else {
-      $scope.shownGroup = group;
-    }
-    $rootScope.$broadcast('menuGroupToggled', group);
+  $scope.toggleList = function (listName) {
+    $scope.currentList = $scope.currentList === listName ? '' : listName;
+    console.log($scope.currentList);
+    $rootScope.$broadcast('menuGroupToggled');
   };
-  $scope.isGroupShown = function(group) {
-    return $scope.shownGroup === group;
-  };
-
-  $scope.$on('membersUpdated', function (e, data) {
-    $scope.groups[0].layer = MapData.getMembers();
-  });
-  $scope.$on('bikeShopsUpdated', function (e, data) {
-    $scope.groups[1].layer = MapData.getBikeShops();
-  });
+  $scope.zIndex = 10;
   $scope.$watch(function () {
-    return $ionicSideMenuDelegate.getOpenRatio();
-  },
-  function (ratio) {
-    if (ratio == 1){
-      $timeout(function () {
-      $scope.sideLoaded = true;
-    }, 500);
-    }
-  });
+  return $ionicSideMenuDelegate.getOpenRatio();
+},
+function (ratio) {
+  //if (ratio === 1){
+$timeout(function () {
+  console.log($scope.zIndex)
+    $scope.zIndex += 1;
+    angular.element(document.querySelector('#locateDiv')).css('z-index', $scope.zIndex);
+});
+  //}
+});
 })
-
-.controller('MapCtrl', function($scope, MapData, Benefits, $timeout) {
+.controller('MapCtrl', function($scope, MapData, Benefits, $timeout, $cordovaInAppBrowser) {
   require([
     "esri/Map",
     "esri/views/MapView",
@@ -75,31 +38,34 @@ angular.module('starter.controllers', [])
     "esri/widgets/Locate/LocateViewModel",
     "dojo/domReady!"
   ], function(Map, MapView, VectorTileLayer, FeatureLayer, GraphicsLayer, Graphic, SimpleMarkerSymbol, PictureMarkerSymbol, SimpleLineSymbol, Point, PopupTemplate, Popup, SimpleRenderer, Locate, LocateVM) {
-
     var map = new Map();
 
+    $scope.$watch('zIndex', function (o, n) {
+      if (o) {
+       console.log(o);
+      console.log(n);
+      }
+
+    });
     var view = new MapView({
       container: "map",
       map: map,
       zoom: 12,
       center: [-78.68, 35.82],
+      constraints: {
+        maxZoom: 18
+      },
       ui: {
         components: ["compass"]
       }
     });
+    view.on('click', function (e) {
+
+    })
     view.then(function() {
       view.maxZoom = 19;
       view.popup.viewModel.docked = true;
       MapData.setMapView(view);
-      //  navigator.geolocation.getCurrentPosition(function(position) {
-      //    var pt = new Point({
-      //     x: position.coords.longitude,
-      //     y: position.coords.latitude,
-      //     spatialReference: 4326
-      //   });
-      //   view.center = pt;
-      //   view.zoom = 16;
-      //  });
     });
     view.popup.viewModel.dockOptions = {
       responsiveDockEnabled: false,
@@ -112,7 +78,7 @@ angular.module('starter.controllers', [])
     view.popup.viewModel.visible = false;
     //add Vector Tile basemap
     var tileLyr = new VectorTileLayer({
-      url: "http://tiles.arcgis.com/tiles/v400IkDOw1ad7Yad/arcgis/rest/services/Vector_Tile_Basemap/VectorTileServer/resources/styles/root.json"
+      url: "http://ral.maps.arcgis.com/sharing/rest/content/items/f6f7665880c94539842f4cc46cfe6c1d/resources/styles/root.json"
     });
     map.add(tileLyr);
 
@@ -191,11 +157,6 @@ angular.module('starter.controllers', [])
       })
     });
     map.add(bikeShops);
-    // bikeShops.on("layer-view-create", function(evt){
-    //   MapData.setBikeShops(evt.layerView);
-    // });
-
-
     //add Bike Racks
     var template = new PopupTemplate({
       title: "{TYPE}",
@@ -217,12 +178,34 @@ angular.module('starter.controllers', [])
     });
     map.add(parking);
 
+    function openUrl () {
+      console.log('URL');
+    }
+
+    var trailheads = new FeatureLayer({
+      id: "trailheads",
+      url: "http://services.arcgis.com/v400IkDOw1ad7Yad/arcgis/rest/services/GreenwayTrailheads/FeatureServer/0",
+      outFields: ['TrailName', 'SegmentName', 'RoadCrossing', 'Access', 'TrailheadID'],
+      popupTemplate: template,
+      renderer: new SimpleRenderer({
+        symbol: new PictureMarkerSymbol({
+            url: 'http://coraleigh.github.io/bike-raleigh/www/img/park-marker.svg',
+            height: 36,
+            width: 36
+          })
+      })
+    });
+    map.add(trailheads);
+
+    function openUrl () {
+      console.log('URL');
+    }
     //add Bicycle Benefits businesses to map
     var benefitTemplate = new PopupTemplate({
       title: "{name}",
       content: "{address}" +
       "<br>{discount}" +
-      "<br><a href='{web}' target='_blank'>Website</a>"
+      "<br><a id='link' href='{web}' >Website</a>"
     });
     var benefitsLyr = new GraphicsLayer({popupTemplate: benefitTemplate});
     map.add(benefitsLyr);
@@ -251,27 +234,35 @@ angular.module('starter.controllers', [])
 
   view.on("layer-view-create", function(evt) {
     if (evt.layer.id === "bikeShops") {
-      //Explore the properties of the population layer's layer view here
         MapData.setBikeShops(evt.layerView);
     } else if (evt.layer.id === "greenways") {
       MapData.setGreenways(evt.layerView);
+    } else if (evt.layer.id === "trailheads") {
+      MapData.setTrailheads(evt.layerView);
     }
   });
 
-
+  gl = new GraphicsLayer();
+  map.add(gl);
+  MapData.setLocationLayer(gl);
   var locateVm = new LocateVM({
     view: view,
     graphicsLayer: gl,
     trackingEnabled: true,
     scale: 2400,
-    updateScaleEnabled: false,
+    updateScaleEnabled: true,
     clearOnTrackingStopEnabled: true
   });
-  var locateBtn = new Locate({
-    viewModel: locateVm
-  }, "locateDiv");
-  locateBtn.startup();
+
+  // var locateBtn = new Locate({
+  //   viewModel: locateVm
+  // }, "locateDiv");
+  //   MapData.setLocate(locateBtn);
+  //   MapData.setLocateVm(locateVm);
+  // locateBtn.on('click', function (e) {
+  //
+  // });
+  // locateBtn.startup();
 
 });
-})
-;
+});
