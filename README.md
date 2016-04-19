@@ -14,7 +14,7 @@ Please keep Pull Requests limited to a single issue.
 **Team Members**  
 When beginning work - assign an issue to yourself and move it to in progress (if in GitHub add the 'in progress' label).  
 Create a new branch.  
-Submit a PR for code review.  
+Submit a PR referencing the issue number (ex. "closes #4") for code review.  
 Delete the branch after the code is merged.
 
 **Non-Team Members**  
