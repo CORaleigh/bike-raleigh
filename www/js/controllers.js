@@ -29,8 +29,8 @@ angular.module('starter.controllers', [])
     var view = new MapView({
       container: "map",
       map: map,
-      zoom: 12,
-      center: [-78.68, 35.82],
+      zoom: 13,
+      center: [-78.646, 35.785],
       constraints: {
         maxZoom: 18
       },
