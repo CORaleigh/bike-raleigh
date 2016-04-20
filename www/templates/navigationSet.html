@@ -1,0 +1,10 @@
+<label class="item item-input">
+  <input type="text" placeholder="Enter start location" ng-change="locationInputChanged()" ng-model="enteredText">
+</label>
+<div style="min-height: 400px">
+  <ion-list>
+      <ion-item ng-repeat="suggestion in suggestions" ng-click="suggestionSelected(suggestion)">
+        {{suggestion.attributes.ADDRESS}}
+      </ion-item>
+  </ion-list>
+</div>
