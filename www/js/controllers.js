@@ -42,6 +42,22 @@ angular.module('starter.controllers', [])
         snapToZoom: false
       }
     });
+    view.popup.watch("selectedFeature", function (e) {
+      $timeout(function () {
+        var elm = document.querySelector('.esri-popup .esri-popup-main a');
+        if (elm) {
+          elm.addEventListener('click', function(e) {
+            e.preventDefault();
+            var href = e.currentTarget.href;
+            var arr = href.split(/http/g);
+            href = 'http' + arr[arr.length-1];
+            window.open(decodeURIComponent(href), '_system', 'location=yes'); return false;
+          });
+        }
+      });
+
+
+    });
     MapData.setMapView(view);
     var compass = new Compass({
       view: view
@@ -129,7 +145,7 @@ angular.module('starter.controllers', [])
         title: "{name}",
         content: "{address}" +
         "<br>{discount}" +
-        "<br><a id='link' href='{web}' >Website</a>"
+        "<br><a id='link' href='{web}' target='_blank'>Website</a>"
       });
       var benefitsLyr = new GraphicsLayer({popupTemplate: benefitTemplate, minScale: 50000});
       webmap.add(benefitsLyr);
