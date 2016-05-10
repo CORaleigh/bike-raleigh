@@ -18,7 +18,7 @@ angular.module('starter')
         var center = {center: [position.coords.longitude, position.coords.latitude]};
         $scope.mapView.animateTo(center);
         require(['esri/Graphic', 'esri/symbols/PictureMarkerSymbol', 'esri/geometry/Point'], function (Graphic, PictureMarkerSymbol, Point) {
-          $scope.graphics.clear();
+          $scope.graphics.removeAll();
           var pms = new PictureMarkerSymbol({
             url: 'http://coraleigh.github.io/bike-raleigh/www/img/location.svg',
             height: 50,
@@ -37,8 +37,9 @@ angular.module('starter')
         navigator.geolocation.clearWatch(watch);
         $scope.locating = false;
         $scope.safeApply();
-        navWatch.remove();
-        console.log('location');
+				if (navWatch) {
+        	navWatch.remove();
+				}
       };
       $scope.safeApply = function(fn) {
         var phase = $scope.$root.$$phase;
@@ -62,7 +63,7 @@ angular.module('starter')
           });
         } else {
           disableLocation();
-          $scope.graphics.clear();
+          $scope.graphics.removeAll();
         }
       };
       $scope.$on('placeSelected', disableLocation);

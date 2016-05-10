@@ -13,19 +13,43 @@ html,body {
 	background-color: black;
 }
 
-/*temp fix to handle popup bug with ArcGIS for JavaScript API 4.0 beta 3*/
-#mapContent.has-header {
-	top: 0;
-	background-color: black;
-}
-.esri-popup .esri-background {
-	background-color: rgba(255, 255, 255, 0.9) !important;
+.esri-popup .esri-docked {
+	margin: 0;
+
 }
 
-.esri-ui {
-	top: 65px !important;
-	z-index: 100000 !important;
+.esri-popup .esri-popup-main {
+	width: 100%;
+	background-color: rgba(255,255,255, 0.95);
 }
+
+.esri-popup .esri-popup-content {
+	max-height: 400px !important;
+}
+
+.legend-icon {
+	position: absolute;
+	top: 5px;
+	height: 36px;
+	padding-left: 1em;
+}
+
+html,
+body,
+#map {
+	padding: 0;
+	margin: 0;
+	height: 100%;
+	width: 100%;
+}
+
+/*temp fix to handle popup bug with ArcGIS for JavaScript API 4.0 beta 3*/
+/*#mapContent.has-header {
+	top: 0;
+	background-color: black;
+}*/
+
+
 #locateDiv {
 	position: absolute;
 	top: 125px;
@@ -53,6 +77,10 @@ locate-button .button {
 .distance {
 	font-size: 13px;
 	font-weight: 400;
+}
+
+.esri-ui {
+	z-index: 100000 !important;
 }
 
 /*

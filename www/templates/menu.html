@@ -19,6 +19,7 @@
       <ion-item class="item-dark item-toggle" ng-click="toggleList('Bike Benefits')">
         <i class="icon ion-chevron-down" ng-class="{rotate: currentList === 'Bike Benefits'}"></i>&nbsp;
         Bike Benefits
+        <img src="http://coraleigh.github.io/bike-raleigh/www/img/benefit-marker.svg" class="legend-icon" alt="Bike Benefits Marker">
         <label class="toggle toggle-balanced">
           <input type="checkbox" ng-click="$event.stopPropagation()" ng-model="benefitsLyr.visible">
           <div class="track">
@@ -31,6 +32,7 @@
       <ion-item class="item-dark item-toggle" ng-click="toggleList('Bike Shops')">
        <i class="icon ion-chevron-down" ng-class="{rotate: currentList === 'Bike Shops'}"></i>&nbsp;
        Bike Shops
+       <img src="http://coraleigh.github.io/bike-raleigh/www/img/shop-marker.svg" class="legend-icon" alt="Bike Shops Marker">
        <label class="toggle toggle-balanced">
          <input type="checkbox" ng-click="$event.stopPropagation()" ng-model="shopsLyr.visible">
          <div class="track">
@@ -39,9 +41,22 @@
        </label>
       </ion-item>
       <bike-shops ng-show="currentList === 'Bike Shops'"></bike-shops>
+      <ion-item class="item-dark item-toggle" ng-click="toggleList('Parking')">
+        <i class="icon ion-chevron-down" ng-class="{rotate: currentList === 'Parking'}"></i>&nbsp;
+        Parking
+        <img src="http://coraleigh.github.io/bike-raleigh/www/img/parking-marker.svg" class="legend-icon" alt="Parking Marker">
+        <label class="toggle toggle-balanced">
+          <input type="checkbox" ng-click="$event.stopPropagation()" ng-model="parkingLyr.visible">
+          <div class="track">
+            <div class="handle"></div>
+          </div>
+        </label>
+      </ion-item>
+      <parking ng-show="currentList === 'Parking'"></parking>
       <ion-item class="item-dark item-toggle" ng-click="toggleList('Trailheads')">
         <i class="icon ion-chevron-down" ng-class="{rotate: currentList === 'Trailheads'}"></i>&nbsp;
         Trailheads
+        <img src="http://coraleigh.github.io/bike-raleigh/www/img/park-marker.svg" class="legend-icon" alt="Trailhead Marker">
         <label class="toggle toggle-balanced">
           <input type="checkbox" ng-click="$event.stopPropagation()" ng-model="trailheadsLyr.visible">
           <div class="track">
@@ -73,6 +88,17 @@
         </label>
       </ion-item>
       <facilities ng-show="currentList === 'Bike Facilities'"></facilities>
+      <ion-item class="item-dark item-toggle" ng-click="toggleList('Greenways')">
+        <i class="icon ion-chevron-down" ng-class="{rotate: currentList === 'Greenways'}"></i>&nbsp;
+        Greenways
+        <label class="toggle toggle-balanced">
+          <input type="checkbox" ng-click="$event.stopPropagation()" ng-model="greenwaysLyr.visible">
+          <div class="track">
+            <div class="handle"></div>
+          </div>
+        </label>
+      </ion-item>
+      <greenways ng-show="currentList === 'Greenways'"></greenways>
 
    </ion-list>
 

@@ -9,7 +9,13 @@ angular.module('starter').factory('MapData', function ($rootScope) {
         trailheads: null,
         locator: null,
         locateVm: null,
-        locationLayer: null
+        locationLayer: null,
+        trailheadsLayer: null,
+        shopsLayer: null,
+        benefitsLayer: null,
+        greenwaysLyr: null,
+        parking: null,
+        parkingLayer: null
     };
     return {
         getMapView: function () {
@@ -47,12 +53,18 @@ angular.module('starter').factory('MapData', function ($rootScope) {
             data.bikeShops = bikeShops;
             $rootScope.$broadcast('bikeShopsUpdated');
         },
-        getGreenways: function () {
-            return data.greenways;
+        getBikeShopsLayer: function () {
+            return data.bikeShopsLayer;
         },
-        setGreenways: function (greenways) {
-            data.greenways = greenways;
-            $rootScope.$broadcast('greenwaysUpdated');
+        setBikeShopsLayer: function (bikeShopsLayer) {
+            data.bikeShopsLayer = bikeShopsLayer;
+        },
+        getGreenwaysLayer: function () {
+            return data.greenwaysLayer;
+        },
+        setGreenwaysLayer: function (greenwaysLayer) {
+            data.greenwaysLayer = greenwaysLayer;
+            $rootScope.$broadcast('greenwaysLayerUpdated');
         },
         getTrailheads: function () {
             return data.trailheads;
@@ -60,6 +72,18 @@ angular.module('starter').factory('MapData', function ($rootScope) {
         setTrailheads: function (trailheads) {
             data.trailheads = trailheads;
             $rootScope.$broadcast('trailheadsUpdated');
+        },
+        getTrailheadsLayer: function () {
+            return data.trailheadsLayer;
+        },
+        setTrailheadsLayer: function (trailheadsLayer) {
+            data.trailheadsLayer = trailheadsLayer;
+        },
+        getBenefitsLayer: function () {
+            return data.benefitsLayer;
+        },
+        setBenefitsLayer: function (benefitsLayer) {
+            data.benefitsLayer = benefitsLayer;
         },
         getLocate: function () {
           return data.locate;
@@ -79,6 +103,19 @@ angular.module('starter').factory('MapData', function ($rootScope) {
         setLocationLayer: function (locationLayer) {
           data.locationLayer = locationLayer;
           $rootScope.$broadcast('locationLayerCreated');
-        }
+        },
+        getParking: function () {
+            return data.parking;
+        },
+        setParking: function (parking) {
+            data.parking = parking;
+            $rootScope.$broadcast('parkingUpdated');
+        },
+        getParkingLayer: function () {
+            return data.parkingLayer;
+        },
+        setParkingLayer: function (parkingLayer) {
+            data.parkingLayer = parkingLayer;
+        },
     };
 });

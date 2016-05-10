@@ -1,6 +1,6 @@
 <div class="selection-menu">
 <ion-item class="item-accordion"
-          ng-repeat="trailhead in trailheadsLyr.graphics._items | orderBy: 'attributes.distance'"
+          ng-repeat="trailhead in trailheads| orderBy: 'attributes.distance'"
           ng-click="trailheadClicked(trailhead)" menu-close="true">
   {{trailhead.attributes.TrailName}}<br/>{{trailhead.attributes.Access}}<br/><span class="distance ion-navigate">Apx. {{trailhead.attributes.distance | number: 1}} mi</span>
 </ion-item>

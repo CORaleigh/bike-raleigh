@@ -1,7 +1,7 @@
 <div class="selection-menu">
 
 <ion-item class="item-accordion item-toggle"
-ng-repeat="item in routeLayer.renderer.infos">
+ng-repeat="item in routeLayer.renderer.uniqueValueInfos | unique: 'label'">
 {{item.label}}
 <!-- <label class="toggle toggle-balanced">
   <input type="checkbox" ng-change="toggleLayer(layer, item)" ng-model="item.visible">

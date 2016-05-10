@@ -9,22 +9,14 @@ angular.module('starter')
 			$scope.$on('routesUpdated', function () {
 				$scope.routeLayer = MapData.getRoutes();
 				$scope.$parent.routeLyr = $scope.routeLayer;
-				for (var i = 0; i < $scope.routeLayer.renderer.infos.length; i++) {
-					$scope.routeLayer.renderer.infos[i].visible = true;
-					expressions.push($scope.routeLayer.renderer.infos[i].value );
-					if ($scope.routeLayer.renderer.infos[i].label === ' ') {
-						$scope.routeLayer.renderer.infos[i].label = 'Preferred Route';
+				for (var i = 0; i < $scope.routeLayer.renderer.uniqueValueInfos.length; i++) {
+					$scope.routeLayer.renderer.uniqueValueInfos[i].visible = true;
+					expressions.push($scope.routeLayer.renderer.uniqueValueInfos[i].value );
+					if ($scope.routeLayer.renderer.uniqueValueInfos[i].label === ' ') {
+						$scope.routeLayer.renderer.uniqueValueInfos[i].label = 'Preferred Route';
 					}
 				}
 			});
-			$scope.toggleLayer = function (layer, item) {
-				if (!item.visible && expressions.indexOf(item.value) > -1) {
-					expressions.splice(expressions.indexOf(item.value), 1);
-				} else {
-					expressions.push(item.value);
-				}
-				layer.definitionExpression = "Comfort in ('" + expressions.toString().replace(/,/g, "','") +"')";
-			};
 		}
 	}
 });
