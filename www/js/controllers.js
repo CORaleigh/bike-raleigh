@@ -100,8 +100,8 @@ angular.module('starter.controllers', [])
             event.layer.renderer = new SimpleRenderer({
               symbol: new PictureMarkerSymbol({
                 url: 'http://coraleigh.github.io/bike-raleigh/www/img/trailhead-marker.svg',
-                height: 24,
-                width: 24
+                height: 14,
+                width: 14
               })
             });
           } else if (event.layer.title === 'Parking') {
