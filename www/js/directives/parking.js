@@ -45,7 +45,7 @@ angular.module('starter')
         }
       });
       $scope.lotClicked = function (lot) {
-        $scope.mapView.animateTo({target: lot.geometry, zoom: 16});
+        $scope.mapView.goTo({target: lot.geometry, zoom: 16});
         $scope.mapView.popup.viewModel.features = [lot];
         $scope.mapView.popup.viewModel.visible = true;
         $scope.mapView.popup.viewModel.location = lot.geometry;

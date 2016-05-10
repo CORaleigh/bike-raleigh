@@ -45,7 +45,7 @@ angular.module('starter')
         }
       });
       $scope.trailheadClicked = function (shop) {
-        $scope.mapView.animateTo({target: shop.geometry, zoom: 16});
+        $scope.mapView.goTo({target: shop.geometry, zoom: 16});
         $scope.mapView.popup.viewModel.features = [shop];
         $scope.mapView.popup.viewModel.visible = true;
         $scope.mapView.popup.viewModel.location = shop.geometry;

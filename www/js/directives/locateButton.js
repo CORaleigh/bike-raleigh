@@ -14,15 +14,20 @@ angular.module('starter')
       $scope.$on('locationLayerCreated', function () {
         $scope.graphics = MapData.getLocationLayer();
       });
+			var watchCount = 0;
       var updateLocation = function (position) {
         var center = {center: [position.coords.longitude, position.coords.latitude]};
-        $scope.mapView.animateTo(center);
+				if (watchCount === 0) {
+					center = {center: [position.coords.longitude, position.coords.latitude], zoom: 16};
+				}
+				$scope.mapView.goTo(center);
+        watchCount += 1;
         require(['esri/Graphic', 'esri/symbols/PictureMarkerSymbol', 'esri/geometry/Point'], function (Graphic, PictureMarkerSymbol, Point) {
           $scope.graphics.removeAll();
           var pms = new PictureMarkerSymbol({
             url: 'http://coraleigh.github.io/bike-raleigh/www/img/location.svg',
-            height: 50,
-            width: 50
+            height: 36,
+            width: 36
           });
           var g = new Graphic({geometry: new Point({
             longitude: parseFloat(position.coords.longitude),
