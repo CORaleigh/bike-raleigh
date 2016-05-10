@@ -70,8 +70,8 @@ angular.module('starter.controllers', [])
             event.layer.renderer = new SimpleRenderer({
               symbol: new PictureMarkerSymbol({
                 url: 'http://coraleigh.github.io/bike-raleigh/www/img/shop-marker.svg',
-                height: 36,
-                width: 36
+                height: 24,
+                width: 24
               })
             });
           } else if (event.layer.title === 'Trailheads') {
@@ -84,8 +84,8 @@ angular.module('starter.controllers', [])
             event.layer.renderer = new SimpleRenderer({
               symbol: new PictureMarkerSymbol({
                 url: 'http://coraleigh.github.io/bike-raleigh/www/img/park-marker.svg',
-                height: 36,
-                width: 36
+                height: 24,
+                width: 24
               })
             });
           } else if (event.layer.title === 'Parking') {
@@ -98,8 +98,16 @@ angular.module('starter.controllers', [])
             event.layer.renderer = new SimpleRenderer({
               symbol: new PictureMarkerSymbol({
                 url: 'http://coraleigh.github.io/bike-raleigh/www/img/parking-marker.svg',
-                height: 36,
-                width: 36
+                height: 24,
+                width: 24
+              })
+            });
+          } else if (event.layer.title === 'Bike Racks') {
+            event.layer.renderer = new SimpleRenderer({
+              symbol: new PictureMarkerSymbol({
+                url: 'http://coraleigh.github.io/bike-raleigh/www/img/bike-rack.svg',
+                height: 24,
+                width: 24
               })
             });
           } else if (event.layer.title === 'Routes') {
@@ -136,8 +144,8 @@ angular.module('starter.controllers', [])
           attributes: {name: member.name, address: member.address, web: member.web, discount: member.discount},
           symbol: new PictureMarkerSymbol({
             url: 'http://coraleigh.github.io/bike-raleigh/www/img/benefit-marker.svg',
-            height: 36,
-            width: 36
+            height: 24,
+            width: 24
           })
         });
         benefitsLyr.add(g);
