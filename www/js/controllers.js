@@ -143,9 +143,16 @@ angular.module('starter.controllers', [])
       //     //add Bicycle Benefits businesses to map
       var benefitTemplate = new PopupTemplate({
         title: "{name}",
-        content: "{address}" +
-        "<br>{discount}" +
-        "<br><a id='link' href='{web}' target='_blank'>Website</a>"
+        // content: "{address}" +
+        // "<br>{discount}" +
+        // "<br><a id='link' href='{web}' target='_blank'>Website</a>"
+        content: [{type: 'fields'}, {displayType: 'list', type: 'attachments'}],
+        fieldInfos: [
+          {fieldName: 'name', label: 'Name', stringFieldOptions: 'text-box', visible: true},
+          {fieldName: 'address', label: 'Address', stringFieldOptions: 'text-box', visible: true},
+          {fieldName: 'discount', label: 'Discount', stringFieldOptions: 'text-box', visible: true},
+          {fieldName: 'web', label: 'Web', stringFieldOptions: 'text-box', visible: true}
+        ]
       });
       var benefitsLyr = new GraphicsLayer({popupTemplate: benefitTemplate, minScale: 50000});
       webmap.add(benefitsLyr);
