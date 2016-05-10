@@ -12,10 +12,8 @@ html,body {
 #map {
 	background-color: black;
 }
-
-.esri-popup .esri-docked {
-	margin: 0;
-
+.esri-view-width-xsmall .esri-popup .esri-docked-bottom-left, .esri-view-width-xsmall .esri-popup .esri-docked-bottom-center, .esri-view-width-xsmall .esri-popup .esri-docked-bottom-right {
+		margin: 0 !important;
 }
 
 .esri-popup .esri-popup-main {
@@ -42,7 +40,9 @@ body,
 	height: 100%;
 	width: 100%;
 }
-
+.esri-attribution {
+	display: none;
+}
 /*temp fix to handle popup bug with ArcGIS for JavaScript API 4.0 beta 3*/
 /*#mapContent.has-header {
 	top: 0;

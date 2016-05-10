@@ -32,7 +32,7 @@ angular.module('starter')
         }});
       }
       $scope.$on('menuGroupToggled', function (e, group) {
-        if ($scope.currentList  === 'Bike Shops') {
+        if ($scope.currentList  === 'Trailheads') {
           setDistance();
         }
       });
