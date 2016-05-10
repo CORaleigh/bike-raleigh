@@ -7,6 +7,9 @@ angular.module('starter')
       $scope.shopsLyr = null;
       $scope.mapView = null;
       $scope.layerVisibility = true;
+      $scope.shopsFilter = function (shop) {
+        return shop.attributes.distance <= 5;
+      }
       $scope.$on('bikeShopsUpdated', function (e, data) {
         $scope.shops = MapData.getBikeShops();
         $scope.shopsLyr = MapData.getBikeShopsLayer();
@@ -45,7 +48,7 @@ angular.module('starter')
         }
       });
       $scope.shopClicked = function (shop) {
-        $scope.mapView.animateTo({target: shop.geometry, zoom: 16});
+        $scope.mapView.goTo({target: shop.geometry, zoom: 16});
         $scope.mapView.popup.viewModel.features = [shop];
         $scope.mapView.popup.viewModel.visible = true;
         $scope.mapView.popup.viewModel.location = shop.geometry;

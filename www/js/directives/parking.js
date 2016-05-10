@@ -7,6 +7,9 @@ angular.module('starter')
       $scope.shopsLyr = null;
       $scope.mapView = null;
       $scope.layerVisibility = true;
+      $scope.parkingFilter = function (lot) {
+        return lot.attributes.distance <= 5;
+      };
       $scope.$on('parkingUpdated', function (e, data) {
         $scope.lots = MapData.getParking();
         $scope.parkingLyr = MapData.getParkingLayer();

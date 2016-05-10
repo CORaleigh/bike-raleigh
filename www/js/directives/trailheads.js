@@ -7,6 +7,9 @@ angular.module('starter')
       $scope.trailheadsLyr = null;
       $scope.mapView = null;
       $scope.layerVisibility = true;
+      $scope.trailheadFilter = function (trailhead) {
+        return trailhead.attributes.distance <= 5;
+      }
       $scope.$on('trailheadsUpdated', function (e, data) {
         $scope.trailheads = MapData.getTrailheads();
         $scope.trailheadsLyr = MapData.getTrailheadsLayer();

@@ -42,6 +42,7 @@ angular.module('starter.controllers', [])
         snapToZoom: false
       }
     });
+
     view.popup.watch("selectedFeature", function (e) {
       $timeout(function () {
         var elm = document.querySelector('.esri-popup .esri-popup-main a');
@@ -63,6 +64,9 @@ angular.module('starter.controllers', [])
       view: view
     });
     view.ui.add(compass, "top-left");
+
+
+
     view.then(function () {
       addBikeBenefits();
       var gl = new GraphicsLayer();

@@ -8,6 +8,9 @@ angular.module('starter')
       $scope.layer = null;
       $scope.mapView = null;
       $scope.layerVisibility = true;
+      $scope.benefitsFilter = function (member) {
+        return member.attributes.distance <= 5;
+      }
       $scope.$on('membersUpdated', function () {
         $scope.members = MapData.getMembers();
         $scope.benefitsLyr = MapData.getBenefitsLayer();
@@ -47,7 +50,7 @@ angular.module('starter')
       $scope.memberClicked = function (member) {
         //var vm = MapData.getLocateVm();
         //vm._stopTracking();
-        $scope.mapView.animateTo({target: member.geometry, zoom: 16});
+        $scope.mapView.goTo({target: member.geometry, zoom: 16});
         $scope.mapView.popup.viewModel.features = [member];
         $scope.mapView.popup.viewModel.visible = true;
         $scope.mapView.popup.viewModel.location = member.geometry;
