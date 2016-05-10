@@ -39,7 +39,7 @@ angular.module('starter.controllers', [])
       }, constraints: {
         maxZoom: 18,
         minZoom: 9,
-        snapToZoom: true
+        snapToZoom: false
       }
     });
     MapData.setMapView(view);

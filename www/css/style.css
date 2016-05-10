@@ -10,7 +10,7 @@ html,body {
     background-color: rgb(140, 197, 65) !important;
 }
 #map {
-	background-color: black;
+	background-color: #F0F0F0;
 }
 .esri-view-width-xsmall .esri-popup .esri-docked-bottom-left, .esri-view-width-xsmall .esri-popup .esri-docked-bottom-center, .esri-view-width-xsmall .esri-popup .esri-docked-bottom-right {
 		margin: 0 !important;

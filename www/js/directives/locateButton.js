@@ -55,7 +55,7 @@ angular.module('starter')
         watchCount = 0;
         $scope.locating = !$scope.locating;
         if ($scope.locating) {
-          watch = navigator.geolocation.watchPosition(updateLocation);
+          watch = navigator.geolocation.watchPosition(updateLocation, null, { maximumAge: 3000, timeout: 5000, enableHighAccuracy: true });
           navWatch = $scope.mapView.watch('interacting', function (evt) {
             if (evt) {
               disableLocation();
