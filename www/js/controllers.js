@@ -202,11 +202,15 @@ angular.module('starter.controllers', [])
               type: "size",
               expression: "view.scale",
               stops: [
-               { value: 1200, size: 18},  // smallest marker will be 12pt at 1:1128 scale
-               { value: 2400, size: 14 },
-               { value: 4800, size: 10 },
-               { value: 9600, size: 6 },  // smallest marker will be 1.5pt at 1:591657528 scale
-               { value: 19200, size: 3 }  // smallest marker will be 1.5pt at 1:591657528 scale
+               { value: 564, size: 14},
+               { value: 1128, size: 14 },
+               { value: 2257, size: 10 },
+               { value: 4514, size: 10 },
+               { value: 9028, size: 6 },
+               { value: 18056, size: 4 },
+               { value: 36112, size: 4 },
+               { value: 72224, size: 2 },
+               { value: 144448, size: 2 }
              ]
            }];
             MapData.setGreenwaysLayer(event.layerView.layer);
