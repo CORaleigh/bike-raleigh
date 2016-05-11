@@ -170,12 +170,45 @@ angular.module('starter.controllers', [])
             });
           } else if (event.layer.title === 'Routes') {
             event.layer.popupEnabled = false;
+            event.layer.renderer.visualVariables = [{
+              type: "size",
+              expression: "view.scale",
+              stops: [
+               { value: 1200, size: 18},  // smallest marker will be 12pt at 1:1128 scale
+               { value: 2400, size: 14 },
+               { value: 4800, size: 10 },
+               { value: 9600, size: 6 },  // smallest marker will be 1.5pt at 1:591657528 scale
+               { value: 19200, size: 3 }  // smallest marker will be 1.5pt at 1:591657528 scale
+             ]
+           }];
             MapData.setRoutes(event.layerView.layer);
           } else if (event.layer.title === 'On Road Facilities') {
             event.layer.popupEnabled = false;
+            event.layer.renderer.visualVariables = [{
+              type: "size",
+              expression: "view.scale",
+              stops: [
+               { value: 1200, size: 18},  // smallest marker will be 12pt at 1:1128 scale
+               { value: 2400, size: 14 },
+               { value: 4800, size: 10 },
+               { value: 9600, size: 6 },  // smallest marker will be 1.5pt at 1:591657528 scale
+               { value: 19200, size: 3 }  // smallest marker will be 1.5pt at 1:591657528 scale
+             ]
+           }];
             MapData.setFacilities(event.layerView.layer);
           } else if (event.layer.title === 'Greenways') {
             event.layer.popupEnabled = false;
+            event.layer.renderer.visualVariables = [{
+              type: "size",
+              expression: "view.scale",
+              stops: [
+               { value: 1200, size: 18},  // smallest marker will be 12pt at 1:1128 scale
+               { value: 2400, size: 14 },
+               { value: 4800, size: 10 },
+               { value: 9600, size: 6 },  // smallest marker will be 1.5pt at 1:591657528 scale
+               { value: 19200, size: 3 }  // smallest marker will be 1.5pt at 1:591657528 scale
+             ]
+           }];
             MapData.setGreenwaysLayer(event.layerView.layer);
           }
         });

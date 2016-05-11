@@ -1,6 +1,6 @@
 <div class="selection-menu">
 <ion-item class="item-accordion"
-          ng-repeat="shop in shops | orderBy: 'attributes.distance' | filter: shopsFilter"
+          ng-repeat="shop in shops | orderBy: 'attributes.distance'"
           ng-click="shopClicked(shop)" menu-close="true">
   {{shop.attributes.LABEL}}<br/><span class="distance ion-navigate">Apx. {{shop.attributes.distance | number: 1}} mi</span>
 </ion-item>
