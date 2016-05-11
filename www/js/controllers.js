@@ -1,5 +1,26 @@
 angular.module('starter.controllers', [])
-.controller('AppCtrl', function($scope, $rootScope, $ionicModal, $timeout, MapData, $ionicSideMenuDelegate) {
+.controller('AppCtrl', function($scope, $rootScope, $ionicModal, $timeout, MapData, $ionicSideMenuDelegate, $ionicPopup) {
+  if (!localStorage.getItem("accepted")) {
+    var myPopup = $ionicPopup.show({
+      template: '<p>This map is published by the City of Raleigh as a resource to bicyclists. Neither the City of Raleigh nor the North Carolina Department of Transportation assumes liability for bicyclists traveling upon these routes or on any public street.</p>' +
+      '<p>Bicyclists have the same rights and responsibilities as motor vehicle operators to obey all traffic laws. Routes should be planned based on an individual evaluation of traffic conditions, road/path materials and personal riding skills.</p>' +
+      '<p>The content of this map has been based on information available at the time of printing only, and it does not reflect any future changes that may occur to routes and road surfaces.</p>',
+      title: 'Disclaimer',
+      subTitle: '',
+      scope: $scope,
+      buttons: [
+        {
+          text: '<b>Accept</b>',
+          type: 'button-positive',
+          onTap: function(e) {
+            localStorage.setItem("accepted", "true");
+            myPopup.close();
+          }
+        }
+      ]
+    });    
+  }
+
   $scope.toggleList = function (listName) {
     $scope.currentList = $scope.currentList === listName ? '' : listName;
     $rootScope.$broadcast('menuGroupToggled');
