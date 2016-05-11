@@ -65,7 +65,21 @@ angular.module('starter.controllers', [])
     });
     view.ui.add(compass, "top-left");
 
+    view.on('click', function (evt) {
+      view.hitTest(evt.screenPoint).then(function (response) {
+        var results = [];
+        angular.forEach(response.results, function (result) {
+          result.graphic.popupTemplate = result.graphic.layer.popupTemplate;
+          results.push(result.graphic);
+        });
+        if (results.length > 0) {
+          view.popup.open({features: results, location: response.mapPoint});
+        } else {
+          view.popup.close();
+        }
 
+      });
+    });
 
     view.then(function () {
       addBikeBenefits();
@@ -80,12 +94,12 @@ angular.module('starter.controllers', [])
               console.log('loaded');
             }
           } else if (event.layer.title === 'Bike Shops') {
+            event.layer.popupEnabled = false;
             MapData.setBikeShopsLayer(event.layerView);
             event.layerView.watch('updating', function (e) {
               event.layerView.queryFeatures().then(function (results){
                 MapData.setBikeShops(results);
               });
-              Map
             });
             event.layer.renderer = new SimpleRenderer({
               symbol: new PictureMarkerSymbol({
@@ -95,6 +109,7 @@ angular.module('starter.controllers', [])
               })
             });
           } else if (event.layer.title === 'Trailheads') {
+            event.layer.popupEnabled = false;
             event.layerView.watch('updating', function (e) {
               MapData.setTrailheadsLayer(event.layerView);
               event.layerView.queryFeatures().then(function (results){
@@ -109,6 +124,7 @@ angular.module('starter.controllers', [])
               })
             });
           } else if (event.layer.title === 'Parking') {
+            event.layer.popupEnabled = false;
             event.layerView.watch('updating', function (e) {
               MapData.setParkingLayer(event.layerView);
               event.layerView.queryFeatures().then(function (results){
@@ -123,6 +139,7 @@ angular.module('starter.controllers', [])
               })
             });
           } else if (event.layer.title === 'Bike Racks') {
+            event.layer.popupEnabled = false;
             event.layer.renderer = new SimpleRenderer({
               symbol: new PictureMarkerSymbol({
                 url: 'http://coraleigh.github.io/bike-raleigh/www/img/bike-rack.svg',
@@ -131,10 +148,13 @@ angular.module('starter.controllers', [])
               })
             });
           } else if (event.layer.title === 'Routes') {
+            event.layer.popupEnabled = false;
             MapData.setRoutes(event.layerView.layer);
           } else if (event.layer.title === 'On Road Facilities') {
+            event.layer.popupEnabled = false;
             MapData.setFacilities(event.layerView.layer);
           } else if (event.layer.title === 'Greenways') {
+            event.layer.popupEnabled = false;
             MapData.setGreenwaysLayer(event.layerView.layer);
           }
         });
