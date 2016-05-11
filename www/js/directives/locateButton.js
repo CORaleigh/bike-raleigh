@@ -3,7 +3,7 @@ angular.module('starter')
 	return {
 		templateUrl: 'templates/locateButton.html',
 		restrict: 'E',
-		controller: function ($scope, $rootScope, MapData, Address) {
+		controller: function ($scope, $rootScope, MapData, Address, $cordovaGoogleAnalytics) {
       $scope.mapView = null;
       $scope.graphics = null;
       var watch = null;
@@ -19,6 +19,7 @@ angular.module('starter')
         var center = {center: [position.coords.longitude, position.coords.latitude]};
 				if (watchCount === 0) {
 					center = {center: [position.coords.longitude, position.coords.latitude], zoom: 16};
+					$cordovaGoogleAnalytics.trackEvent('Geolocation', 'Coordinates', position.coords.latitude + ',' + position.coords.longitude);
 				}
 				$scope.mapView.goTo(center);
         watchCount += 1;

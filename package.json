@@ -23,7 +23,8 @@
     {
       "locator": "https://github.com/apache/cordova-plugin-whitelist.git#r1.0.0",
       "id": "cordova-plugin-whitelist"
-    }
+    },
+    "cordova-plugin-google-analytics"
   ],
   "cordovaPlatforms": [
     {
