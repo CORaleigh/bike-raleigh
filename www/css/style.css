@@ -150,7 +150,9 @@ navigation-set {
     transition: all 800ms cubic-bezier(0.46, 0.03, 0.52, 0.96);
     background-color: #fff;
     max-height: 500px;
-    overflow: scroll;
+    max-width: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
 		-webkit-overflow-scrolling: touch;
 }
 .selection-menu.ng-hide {
