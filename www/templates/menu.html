@@ -65,7 +65,16 @@
         </label>
       </ion-item>
       <trailheads ng-show="currentList === 'Trailheads'"></trailheads>
-
+      <ion-item class="item-dark item-toggle">
+        Bike Racks
+        <img src="http://coraleigh.github.io/bike-raleigh/www/img/bike-rack.svg" class="legend-icon" alt="Bike Rack Marker">
+        <label class="toggle toggle-balanced">
+          <input type="checkbox" ng-click="$event.stopPropagation()" ng-model="bikeRackLyr.visible">
+          <div class="track">
+            <div class="handle"></div>
+          </div>
+        </label>
+      </ion-item>
       <ion-item class="item-dark item-toggle" ng-click="toggleList('Bike Routes')">
         <i class="icon ion-chevron-down" ng-class="{rotate: currentList === 'Bike Routes'}"></i>&nbsp;
         Bike Routes
