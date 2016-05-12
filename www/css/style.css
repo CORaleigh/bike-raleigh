@@ -9,6 +9,11 @@ html,body {
     border-color: rgb(140, 197, 65) !important;
     background-color: rgb(140, 197, 65) !important;
 }
+.button-balanced {
+	background-color: rgb(140, 197, 65) !important;
+	margin-left: 10px;
+	width: 92% !important;
+}
 #map {
 	background-color: #F0F0F0;
 }

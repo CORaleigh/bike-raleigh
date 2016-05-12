@@ -25,6 +25,35 @@ angular.module('starter.controllers', [])
     $scope.currentList = $scope.currentList === listName ? '' : listName;
     $rootScope.$broadcast('menuGroupToggled');
   };
+  $scope.openInBrowser = function (evt) {
+    evt.preventDefault();
+    window.open(evt.target.href, '_system', 'location=yes'); return false;
+  };
+  $scope.openMail = function (evt) {
+    evt.preventDefault();
+    window.open('mailto:gis@raleighnc.gov?subject=BikeRaleigh App Feedback', '_system', 'location=yes'); return false;
+  };
+  $scope.showAboutPopup = function () {
+    var about = $ionicPopup.show({
+      template: '<p>Developed by City of Raleigh GIS for the Office of Transportation Planning. &copy;' + new Date().getFullYear() + '</p>' +
+      '<p>For more infomation about the BikeRaleigh program, please visit <a href="http://www.bikeraleigh.org" target="_blank" ng-click="openInBrowser($event)">BikeRaleigh.org</a></p>' +
+      '<p>We appreciate your feedback, please send your comments or report any issues.</p>' +
+      '<button class="button button-block button-positive ion-email button-outline icon-left" ng-click="openMail($event)">Send Feedback</button>' +
+      '<small>Icon pack by <a href="http://www.icons8.com" target="_blank" ng-click="openInBrowser($event)">Icons8</a></small>',
+      title: 'About',
+      subTitle: '',
+      scope: $scope,
+      buttons: [
+        {
+          text: '<b>Dismiss</b>',
+          type: 'button-positive',
+          onTap: function(e) {
+            about.close();
+          }
+        }
+      ]
+    });
+  };
 })
 .controller('MapCtrl', function($scope, MapData, Benefits, $timeout, $cordovaInAppBrowser, $rootScope) {
   require([
