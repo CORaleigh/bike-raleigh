@@ -29,6 +29,9 @@ html,body {
 .esri-popup .esri-popup-content {
 	max-height: 400px !important;
 }
+.ion-content {
+	overflow-y: auto;
+}
 
 .legend-icon {
 	position: absolute;
