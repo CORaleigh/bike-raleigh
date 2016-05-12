@@ -13,13 +13,15 @@ angular.module('starter')
       });
       $scope.$on('locationLayerCreated', function () {
         $scope.graphics = MapData.getLocationLayer();
+				navigator.geolocation.getCurrentPosition(updateLocation, null, {enableHighAccuracy: true });
       });
 			var watchCount = 0;
       var updateLocation = function (position) {
         var center = {center: [position.coords.longitude, position.coords.latitude]};
 				if (watchCount === 0) {
 					center = {center: [position.coords.longitude, position.coords.latitude], zoom: 16};
-					$cordovaGoogleAnalytics.trackEvent('Geolocation', 'Coordinates', position.coords.latitude + ',' + position.coords.longitude);
+
+					//$cordovaGoogleAnalytics.trackEvent('Geolocation', 'Coordinates', position.coords.latitude + ',' + position.coords.longitude);
 				}
 				$scope.mapView.goTo(center);
         watchCount += 1;

@@ -274,7 +274,7 @@ angular.module('starter.controllers', [])
           {fieldName: 'web', label: 'Web', stringFieldOptions: 'text-box', visible: true}
         ]
       });
-      var benefitsLyr = new GraphicsLayer({popupTemplate: benefitTemplate, minScale: 50000});
+      var benefitsLyr = new GraphicsLayer({popupTemplate: benefitTemplate, minScale: 80000});
       webmap.add(benefitsLyr);
       Benefits.getBikeBenefits().then(function (data) {
         var g = null;
