@@ -29,8 +29,12 @@ html,body {
 .esri-popup .esri-popup-content {
 	max-height: 400px !important;
 }
-.ion-content {
-	overflow-y: auto;
+.scroll-content {
+	overflow-y: auto !important;
+}
+
+.selection-menu {
+	max-height: 300px !important;
 }
 
 .legend-icon {
