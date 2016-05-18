@@ -35,7 +35,7 @@ angular.module('starter')
         }});
       }
       $scope.$on('menuGroupToggled', function (e, group) {
-        if ($scope.currentList  === 'Trailheads') {
+        if ($scope.currentList  === 'Greenway Access') {
           setDistance();
         }
       });

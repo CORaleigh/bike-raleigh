@@ -53,10 +53,10 @@
         </label>
       </ion-item>
       <parking ng-show="currentList === 'Parking'"></parking>
-      <ion-item class="item-dark item-toggle" ng-click="toggleList('Trailheads')">
-        <i class="icon ion-chevron-down" ng-class="{rotate: currentList === 'Trailheads'}"></i>&nbsp;
-        Trailheads
-        <img src="http://coraleigh.github.io/bike-raleigh/www/img/trailhead-marker.svg" class="legend-icon" alt="Trailhead Marker">
+      <ion-item class="item-dark item-toggle" ng-click="toggleList('Greenway Access')">
+        <i class="icon ion-chevron-down" ng-class="{rotate: currentList === 'Greenway Access'}"></i>&nbsp;
+        Greenway Access
+        <img style="height: 20px;top: 15px;" src="http://coraleigh.github.io/bike-raleigh/www/img/trailhead-marker.svg" class="legend-icon" alt="Trailhead Marker">
         <label class="toggle toggle-balanced">
           <input type="checkbox" ng-click="$event.stopPropagation()" ng-model="trailheadsLyr.visible">
           <div class="track">
@@ -64,7 +64,7 @@
           </div>
         </label>
       </ion-item>
-      <trailheads ng-show="currentList === 'Trailheads'"></trailheads>
+      <trailheads ng-show="currentList === 'Greenway Access'"></trailheads>
       <ion-item class="item-dark item-toggle">
         Bike Racks
         <img src="http://coraleigh.github.io/bike-raleigh/www/img/bike-rack.svg" class="legend-icon" alt="Bike Rack Marker">
