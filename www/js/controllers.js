@@ -1,5 +1,6 @@
 angular.module('starter.controllers', [])
-.controller('AppCtrl', function($scope, $rootScope, $ionicModal, $timeout, MapData, $ionicSideMenuDelegate, $ionicPopup) {
+.controller('AppCtrl', function($scope, $rootScope, $ionicModal, $timeout, MapData, $ionicSideMenuDelegate, $ionicPopup, $ionicLoading) {
+  $ionicLoading.show();
   if (!localStorage.getItem("accepted")) {
     var disclaimer = $ionicPopup.show({
       template: '<p>This map is published by the City of Raleigh as a resource to bicyclists. Neither the City of Raleigh nor the North Carolina Department of Transportation assumes liability for bicyclists traveling upon these routes or on any public street.</p>' +
@@ -55,7 +56,7 @@ angular.module('starter.controllers', [])
     });
   };
 })
-.controller('MapCtrl', function($scope, MapData, Benefits, $timeout, $cordovaInAppBrowser, $rootScope) {
+.controller('MapCtrl', function($scope, MapData, Benefits, $timeout, $cordovaInAppBrowser, $rootScope, $ionicLoading) {
   require([
     "esri/views/MapView",
     "esri/WebMap",
@@ -140,9 +141,10 @@ angular.module('starter.controllers', [])
       $timeout(function() {
         view.on('layerview-create', function (event) {
           if (event.layer.title === 'Vector Tile Basemap Light') {
+            $ionicLoading.hide();
+            console.log(event.layer.loadStatus);
             if (navigator.splashscreen) {
               navigator.splashscreen.hide();
-              console.log('loaded');
             }
           } else if (event.layer.title === 'Bike Shops') {
             event.layer.popupEnabled = false;
@@ -162,6 +164,7 @@ angular.module('starter.controllers', [])
           } else if (event.layer.title === 'Trailheads') {
             event.layer.popupEnabled = false;
             event.layerView.watch('updating', function (e) {
+
               MapData.setTrailheadsLayer(event.layerView);
               event.layerView.queryFeatures().then(function (results){
                 MapData.setTrailheads(results);
