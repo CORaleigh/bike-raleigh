@@ -19,7 +19,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
       // org.apache.cordova.statusbar required
       StatusBar.styleLightContent();
     }
-    
+    setTimeout(function() {
+      if (navigator.splashscreen) {
+        navigator.splashscreen.hide();
+      }
+    }, 1000)
     $cordovaGoogleAnalytics.startTrackerWithId('UA-11110258-42');
   });
 })

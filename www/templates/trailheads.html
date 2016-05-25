@@ -2,6 +2,6 @@
 <ion-item class="item-accordion"
           ng-repeat="trailhead in trailheads| orderBy: 'attributes.distance' | filter: trailheadFilter"
           ng-click="trailheadClicked(trailhead)" menu-close="true">
-  {{trailhead.attributes.TrailName}}<br/>{{trailhead.attributes.Access}}<br/><span class="distance ion-navigate">Apx. {{trailhead.attributes.distance | number: 1}} mi</span>
+  {{trailhead.attributes.TRAILNAME}}<br/>{{trailhead.attributes.ACCESS_}}<br/><span class="distance ion-navigate">Apx. {{trailhead.attributes.distance | number: 1}} mi</span>
 </ion-item>
 </div>
