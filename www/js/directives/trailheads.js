@@ -3,12 +3,12 @@ angular.module('starter')
   return {
     templateUrl: 'templates/trailheads.html',
     restrict: 'E',
-    controller: function ($scope, $rootScope, MapData, $ionicSideMenuDelegate ) {
+    controller: function ($scope, $rootScope, $timeout, MapData, $ionicSideMenuDelegate ) {
       $scope.trailheadsLyr = null;
       $scope.mapView = null;
       $scope.layerVisibility = true;
       $scope.trailheadFilter = function (trailhead) {
-        return trailhead.attributes.distance <= 5;
+        return trailhead.properties.distance <= 5;
       }
       $scope.$on('trailheadsUpdated', function (e, data) {
         $scope.trailheads = MapData.getTrailheads();
@@ -16,23 +16,37 @@ angular.module('starter')
         if ($scope.trailheads){
           setDistance();
         }
+        $scope.trailheadsPane = MapData.getMapView().getPane('trailheads');
       });
       $scope.mapView = null;
       $scope.$on('mapViewCreated', function () {
         $scope.mapView = MapData.getMapView();
       });
-      var setDistance = function () {
-        require(["esri/geometry/geometryEngine"], function (geometryEngine) {
-          var item = null;
-          var dist = 0;
-          for (var i = 0; i < $scope.trailheads.length; i++) {
 
+      var setDistance = function () {
+          for (var i = 0; i < $scope.trailheads.length; i++) {
             item = $scope.trailheads[i];
             if (item){
-            dist = geometryEngine.distance($scope.mapView.center, item.geometry, 'miles');
-            item.attributes.distance = dist;
+              var center = {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                  "type": "Point",
+                  "coordinates": [MapData.getMapView().getCenter().lng, MapData.getMapView().getCenter().lat]
+                }
+              };
+              var point2 = {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                  "type": "Point",
+                  "coordinates": item.geometry.coordinates
+                }
+              };
+              dist = turf.distance(point2, center, 'miles');
+              item.properties.distance = dist;
+            }
           }
-        }});
       }
       $scope.$on('menuGroupToggled', function (e, group) {
         if ($scope.currentList  === 'Greenway Access') {
@@ -47,12 +61,11 @@ angular.module('starter')
           setDistance();
         }
       });
-      $scope.trailheadClicked = function (shop) {
-        $scope.mapView.goTo({target: shop.geometry, zoom: 16});
-        $scope.mapView.popup.viewModel.features = [shop];
-        $scope.mapView.popup.viewModel.visible = true;
-        $scope.mapView.popup.viewModel.location = shop.geometry;
-        $rootScope.$broadcast('placeSelected');
+      $scope.trailheadClicked = function (trailhead) {
+        MapData.getMapView().flyTo([trailhead.geometry.coordinates[1], trailhead.geometry.coordinates[0]], 18)
+        $timeout(function() {
+          $rootScope.$broadcast('featureSelected', trailhead, 'trailheads');
+        });
       };
     }
   }

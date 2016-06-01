@@ -1,0 +1,19 @@
+<div class="card" ng-show="showPopup">
+  <div class="item item-divider">
+    {{format.title}}
+    <button style="position:absolute;right:0;top:0;margin-top: -5px;" class="button button-clear button-stable" ng-click="showPopup = false">
+      <i class="icon ion-close-round"></i>
+    </button>
+  </div>
+  <div class="item item-text-wrap">
+    <table>
+      <tbody>
+        <tr ng-repeat="field in format.fields" ng-if="field.value.trim().length > 0 && field.value.indexOf('null') < 0">
+          <th ng-if="field.value.trim().length > 0">{{field.name}}</th>
+          <td ng-if="field.value.indexOf('http') < 0 && field.value.trim().length > 0">{{field.value}}</td>
+          <td ng-if="field.value.indexOf('http') > -1 && field.value.trim().length > 0"><a href="{{field.value}}" ng-click="openInBrowser($event)" ng-if="field.value.indexOf('http') > -1 ">View</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

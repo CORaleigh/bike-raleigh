@@ -8,11 +8,12 @@ angular.module('starter')
 			var expressions = [];
 			$scope.$on('greenwaysLayerUpdated', function () {
 				$scope.greenwaysLyr = MapData.getGreenwaysLayer();
-				$scope.$parent.greenwaysLyr = $scope.greenwaysLyr;
-				for (var i = 0; i < $scope.greenwaysLyr.renderer.uniqueValueInfos.length; i++) {
-					$scope.greenwaysLyr.renderer.uniqueValueInfos[i].visible = true;
-					expressions.push($scope.greenwaysLyr.renderer.uniqueValueInfos[i].value )
-				}
+				$scope.greenwaysPane = MapData.getMapView().getPane('greenways');
+				// $scope.$parent.greenwaysLyr = $scope.greenwaysLyr;
+				// for (var i = 0; i < $scope.greenwaysLyr.renderer.uniqueValueInfos.length; i++) {
+				// 	$scope.greenwaysLyr.renderer.uniqueValueInfos[i].visible = true;
+				// 	expressions.push($scope.greenwaysLyr.renderer.uniqueValueInfos[i].value )
+				// }
 			});
 		}
 	}

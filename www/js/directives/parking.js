@@ -3,12 +3,12 @@ angular.module('starter')
   return {
     templateUrl: 'templates/parking.html',
     restrict: 'E',
-    controller: function ($scope, $rootScope, MapData, $ionicSideMenuDelegate ) {
+    controller: function ($scope, $rootScope, $timeout, MapData, $ionicSideMenuDelegate ) {
       $scope.shopsLyr = null;
       $scope.mapView = null;
       $scope.layerVisibility = true;
       $scope.parkingFilter = function (lot) {
-        return lot.attributes.distance <= 5;
+        return lot.properties.distance <= 5;
       };
       $scope.$on('parkingUpdated', function (e, data) {
         $scope.lots = MapData.getParking();
@@ -16,23 +16,36 @@ angular.module('starter')
         if ($scope.lots){
           setDistance();
         }
+        $scope.parkingPane = MapData.getMapView().getPane('parking');
       });
       $scope.mapView = null;
       $scope.$on('mapViewCreated', function () {
         $scope.mapView = MapData.getMapView();
       });
       var setDistance = function () {
-        require(["esri/geometry/geometryEngine"], function (geometryEngine) {
-          var item = null;
-          var dist = 0;
           for (var i = 0; i < $scope.lots.length; i++) {
-
             item = $scope.lots[i];
             if (item){
-            dist = geometryEngine.distance($scope.mapView.center, item.geometry, 'miles');
-            item.attributes.distance = dist;
+              var center = {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                  "type": "Point",
+                  "coordinates": [MapData.getMapView().getCenter().lng, MapData.getMapView().getCenter().lat]
+                }
+              };
+              var point2 = {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                  "type": "Point",
+                  "coordinates": item.geometry.coordinates
+                }
+              };
+              dist = turf.distance(point2, center, 'miles');
+              item.properties.distance = dist;
+            }
           }
-          }});
       }
       $scope.$on('menuGroupToggled', function (e, group) {
         if ($scope.currentList  === 'Parking') {
@@ -48,10 +61,10 @@ angular.module('starter')
         }
       });
       $scope.lotClicked = function (lot) {
-        $scope.mapView.goTo({target: lot.geometry, zoom: 16});
-        $scope.mapView.popup.viewModel.features = [lot];
-        $scope.mapView.popup.viewModel.visible = true;
-        $scope.mapView.popup.viewModel.location = lot.geometry;
+        MapData.getMapView().flyTo([lot.geometry.coordinates[1], lot.geometry.coordinates[0]], 18)
+        $timeout(function() {
+          $rootScope.$broadcast('featureSelected', lot, 'parking');
+        });
       };
     }
   }

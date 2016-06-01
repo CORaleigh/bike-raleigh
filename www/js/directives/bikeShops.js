@@ -3,36 +3,49 @@ angular.module('starter')
   return {
     templateUrl: 'templates/bikeShops.html',
     restrict: 'E',
-    controller: function ($scope, $rootScope, MapData, $ionicSideMenuDelegate ) {
+    controller: function ($scope, $rootScope, $timeout, MapData, $ionicSideMenuDelegate ) {
       $scope.shopsLyr = null;
       $scope.mapView = null;
-      $scope.layerVisibility = true;
       $scope.shopsFilter = function (shop) {
         return shop.attributes.distance <= 5;
       }
       $scope.$on('bikeShopsUpdated', function (e, data) {
+        $scope.shopsPane = MapData.getMapView().getPane('shops');
         $scope.shops = MapData.getBikeShops();
         $scope.shopsLyr = MapData.getBikeShopsLayer();
-        if ($scope.shops){
+        if ($scope.shops && $scope.mapView){
           setDistance();
         }
       });
       $scope.mapView = null;
       $scope.$on('mapViewCreated', function () {
+
         $scope.mapView = MapData.getMapView();
       });
       var setDistance = function () {
-        require(["esri/geometry/geometryEngine"], function (geometryEngine) {
-          var item = null;
-          var dist = 0;
           for (var i = 0; i < $scope.shops.length; i++) {
             item = $scope.shops[i];
             if (item){
-            dist = geometryEngine.distance($scope.mapView.center, item.geometry, 'miles');
-            item.attributes.distance = dist;
+              var center = {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                  "type": "Point",
+                  "coordinates": [MapData.getMapView().getCenter().lng, MapData.getMapView().getCenter().lat]
+                }
+              };
+              var point2 = {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                  "type": "Point",
+                  "coordinates": item.geometry.coordinates
+                }
+              };
+              dist = turf.distance(point2, center, 'miles');
+              item.properties.distance = dist;
+            }
           }
-          }
-        });
       }
       $scope.$on('menuGroupToggled', function (e, group) {
         if ($scope.currentList  === 'Bike Shops') {
@@ -48,10 +61,10 @@ angular.module('starter')
         }
       });
       $scope.shopClicked = function (shop) {
-        $scope.mapView.goTo({target: shop.geometry, zoom: 16});
-        $scope.mapView.popup.viewModel.features = [shop];
-        $scope.mapView.popup.viewModel.visible = true;
-        $scope.mapView.popup.viewModel.location = shop.geometry;
+        MapData.getMapView().flyTo([shop.geometry.coordinates[1], shop.geometry.coordinates[0]], 18)
+        $timeout(function() {
+          $rootScope.$broadcast('featureSelected', shop, 'shops');
+        });
       };
     }
   }

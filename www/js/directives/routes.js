@@ -8,14 +8,15 @@ angular.module('starter')
 			var expressions = [];
 			$scope.$on('routesUpdated', function () {
 				$scope.routeLayer = MapData.getRoutes();
-				$scope.$parent.routeLyr = $scope.routeLayer;
-				for (var i = 0; i < $scope.routeLayer.renderer.uniqueValueInfos.length; i++) {
-					$scope.routeLayer.renderer.uniqueValueInfos[i].visible = true;
-					expressions.push($scope.routeLayer.renderer.uniqueValueInfos[i].value );
-					if ($scope.routeLayer.renderer.uniqueValueInfos[i].label === ' ') {
-						$scope.routeLayer.renderer.uniqueValueInfos[i].label = 'Preferred Route';
-					}
-				}
+				$scope.routesPane = MapData.getMapView().getPane('routes');
+				// $scope.$parent.routeLyr = $scope.routeLayer;
+				// for (var i = 0; i < $scope.routeLayer.renderer.uniqueValueInfos.length; i++) {
+				// 	$scope.routeLayer.renderer.uniqueValueInfos[i].visible = true;
+				// 	expressions.push($scope.routeLayer.renderer.uniqueValueInfos[i].value );
+				// 	if ($scope.routeLayer.renderer.uniqueValueInfos[i].label === ' ') {
+				// 		$scope.routeLayer.renderer.uniqueValueInfos[i].label = 'Preferred Route';
+				// 	}
+				// }
 			});
 		}
 	}

@@ -3,18 +3,17 @@ angular.module('starter')
   return {
     templateUrl: 'templates/bikeBenefits.html',
     restrict: 'E',
-    controller: function ($scope, $rootScope, MapData, $ionicSideMenuDelegate) {
+    controller: function ($scope, $rootScope, $timeout, MapData, $ionicSideMenuDelegate) {
       $scope.members = null;
       $scope.layer = null;
       $scope.mapView = null;
-      $scope.layerVisibility = true;
       $scope.benefitsFilter = function (member) {
         return member.attributes.distance <= 5;
       }
       $scope.$on('membersUpdated', function () {
         $scope.members = MapData.getMembers();
         $scope.benefitsLyr = MapData.getBenefitsLayer();
-
+        $scope.benefitsPane = MapData.getMapView().getPane('benefits');
       });
       $scope.mapView = null;
       $scope.$on('mapViewCreated', function () {
@@ -22,17 +21,29 @@ angular.module('starter')
         setDistance();
       });
       var setDistance = function () {
-        require(["esri/geometry/geometryEngine", "esri/geometry/support/webMercatorUtils"], function (geometryEngine, webMercatorUtils) {
-          var item = null;
-          var dist = 0;
-          if ($scope.members) {
-            for (var i = 0; i < $scope.members.length; i++) {
-              item = $scope.members[i];
-              dist = geometryEngine.distance($scope.mapView.center, webMercatorUtils.geographicToWebMercator(item.geometry), 'miles');
-              item.attributes.distance = dist;
+          for (var i = 0; i < $scope.members.length; i++) {
+            item = $scope.members[i];
+            if (item){
+              var center = {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                  "type": "Point",
+                  "coordinates": [MapData.getMapView().getCenter().lng, MapData.getMapView().getCenter().lat]
+                }
+              };
+              var point2 = {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                  "type": "Point",
+                  "coordinates": item.geometry.coordinates
+                }
+              };
+              dist = turf.distance(point2, center, 'miles');
+              item.properties.distance = dist;
             }
           }
-        });
       }
       $scope.$on('menuGroupToggled', function (e, group) {
         if ($scope.currentList === 'Bike Benefits') {
@@ -48,13 +59,12 @@ angular.module('starter')
         }
       });
       $scope.memberClicked = function (member) {
-        //var vm = MapData.getLocateVm();
-        //vm._stopTracking();
-        $scope.mapView.goTo({target: member.geometry, zoom: 16});
-        $scope.mapView.popup.viewModel.features = [member];
-        $scope.mapView.popup.viewModel.visible = true;
-        $scope.mapView.popup.viewModel.location = member.geometry;
-        $rootScope.$broadcast('placeSelected');
+        MapData.getMapView().flyTo([member.geometry.coordinates[1], member.geometry.coordinates[0]], 18)
+        if(!$scope.$$phase) {
+        }
+        $timeout(function() {
+          $rootScope.$broadcast('featureSelected', member, 'benefits');
+        })
       };
       $scope.layerToggled = function (layer, visible) {
         layer.visible = visible;

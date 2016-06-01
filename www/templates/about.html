@@ -1,0 +1,13 @@
+<ion-modal-view class="legend-modal">
+  <ion-header-bar class="bar bar-header bar-balanced">
+    <h1 class="title">About</h1>
+    <button class="button button-clear button-primary" ng-click="aboutModal.hide()">Close</button>
+  </ion-header-bar>
+  <ion-content class="padding">
+    <p>Developed by City of Raleigh GIS for the Office of Transportation Planning. &copy;2016</p>
+    <p>For more infomation about the BikeRaleigh program, please visit <a href="http://www.bikeraleigh.org" target="_blank" ng-click="openInBrowser($event)">BikeRaleigh.org</a></p>
+    <p>We appreciate your feedback, please send your comments or report any issues.</p>
+    <button class="button button-block button-balanced ion-email icon-left" ng-click="openMail($event)">Send Feedback</button>
+    <small>Icon pack by <a href="http://www.icons8.com" target="_blank" ng-click="openInBrowser($event)">Icons8</a></small>
+  </ion-content>
+</ion-modal-view>

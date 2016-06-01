@@ -21,7 +21,7 @@
         Bike Benefits
         <img src="http://coraleigh.github.io/bike-raleigh/www/img/benefit-marker.svg" class="legend-icon" alt="Bike Benefits Marker">
         <label class="toggle toggle-balanced">
-          <input type="checkbox" ng-click="$event.stopPropagation()" ng-model="benefitsLyr.visible">
+          <input type="checkbox" ng-click="$event.stopPropagation()" ng-model="benefitsPane.style.display" ng-true-value="''" ng-false-value="'none'">
           <div class="track">
             <div class="handle"></div>
           </div>
@@ -34,7 +34,7 @@
        Bike Shops
        <img src="http://coraleigh.github.io/bike-raleigh/www/img/shop-marker.svg" class="legend-icon" alt="Bike Shops Marker">
        <label class="toggle toggle-balanced">
-         <input type="checkbox" ng-click="$event.stopPropagation()" ng-model="shopsLyr.visible">
+         <input type="checkbox" ng-click="$event.stopPropagation()" ng-model="shopsPane.style.display" ng-true-value="''" ng-false-value="'none'">
          <div class="track">
            <div class="handle"></div>
          </div>
@@ -46,7 +46,7 @@
         Parking
         <img src="http://coraleigh.github.io/bike-raleigh/www/img/parking-marker.svg" class="legend-icon" alt="Parking Marker">
         <label class="toggle toggle-balanced">
-          <input type="checkbox" ng-click="$event.stopPropagation()" ng-model="parkingLyr.visible">
+          <input type="checkbox" ng-click="$event.stopPropagation()" ng-model="parkingPane.style.display" ng-true-value="''" ng-false-value="'none'">
           <div class="track">
             <div class="handle"></div>
           </div>
@@ -58,7 +58,7 @@
         Greenway Access
         <img style="height: 20px;top: 15px;" src="http://coraleigh.github.io/bike-raleigh/www/img/trailhead-marker.svg" class="legend-icon" alt="Trailhead Marker">
         <label class="toggle toggle-balanced">
-          <input type="checkbox" ng-click="$event.stopPropagation()" ng-model="trailheadsLyr.visible">
+          <input type="checkbox" ng-click="$event.stopPropagation()" ng-model="trailheadsPane.style.display" ng-true-value="''" ng-false-value="'none'">
           <div class="track">
             <div class="handle"></div>
           </div>
@@ -69,118 +69,50 @@
         Bike Racks
         <img src="http://coraleigh.github.io/bike-raleigh/www/img/bike-rack.svg" class="legend-icon" alt="Bike Rack Marker">
         <label class="toggle toggle-balanced">
-          <input type="checkbox" ng-click="$event.stopPropagation()" ng-model="bikeRackLyr.visible">
+          <input type="checkbox" ng-click="$event.stopPropagation()" ng-model="bikeracksPane.style.display" ng-true-value="''" ng-false-value="'none'">
           <div class="track">
             <div class="handle"></div>
           </div>
         </label>
       </ion-item>
-      <ion-item class="item-dark item-toggle" ng-click="toggleList('Bike Routes')">
-        <i class="icon ion-chevron-down" ng-class="{rotate: currentList === 'Bike Routes'}"></i>&nbsp;
+      <ion-item class="item-dark item-toggle">
+        <!-- <i class="icon ion-chevron-down" ng-class="{rotate: currentList === 'Bike Routes'}"></i>&nbsp; -->
         Bike Routes
         <label class="toggle toggle-balanced">
-          <input type="checkbox" ng-click="$event.stopPropagation()" ng-model="routeLyr.visible">
+          <input type="checkbox" ng-click="$event.stopPropagation()" ng-model="routesPane.style.display" ng-true-value="''" ng-false-value="'none'">
           <div class="track">
             <div class="handle"></div>
           </div>
         </label>
       </ion-item>
-      <routes ng-show="currentList === 'Bike Routes'"></routes>
-      <ion-item class="item-dark item-toggle" ng-click="toggleList('Bike Facilities')">
-        <i class="icon ion-chevron-down" ng-class="{rotate: currentList === 'Bike Facilities'}"></i>&nbsp;
+      <!-- <routes ng-show="currentList === 'Bike Routes'"></routes> -->
+      <ion-item class="item-dark item-toggle">
+        <!-- <i class="icon ion-chevron-down" ng-class="{rotate: currentList === 'Bike Facilities'}"></i>&nbsp; -->
         Bike Facilities
         <label class="toggle toggle-balanced">
-          <input type="checkbox" ng-click="$event.stopPropagation()" ng-model="facilityLyr.visible">
+          <input type="checkbox" ng-click="$event.stopPropagation()" ng-model="facilitiesPane.style.display" ng-true-value="''" ng-false-value="'none'">
           <div class="track">
             <div class="handle"></div>
           </div>
         </label>
       </ion-item>
-      <facilities ng-show="currentList === 'Bike Facilities'"></facilities>
-      <ion-item class="item-dark item-toggle" ng-click="toggleList('Greenways')">
-        <i class="icon ion-chevron-down" ng-class="{rotate: currentList === 'Greenways'}"></i>&nbsp;
+      <!-- <facilities ng-show="currentList === 'Bike Facilities'"></facilities> -->
+      <ion-item class="item-dark item-toggle">
+        <!-- <i class="icon ion-chevron-down" ng-class="{rotate: currentList === 'Greenways'}"></i>&nbsp; -->
         Greenways
         <label class="toggle toggle-balanced">
-          <input type="checkbox" ng-click="$event.stopPropagation()" ng-model="greenwaysLyr.visible">
+          <input type="checkbox" ng-click="$event.stopPropagation()" ng-model="greenwaysPane.style.display" ng-true-value="''" ng-false-value="'none'">
           <div class="track">
             <div class="handle"></div>
           </div>
         </label>
       </ion-item>
-      <greenways ng-show="currentList === 'Greenways'"></greenways>
+      <!-- <greenways ng-show="currentList === 'Greenways'"></greenways> -->
 
    </ion-list>
-   <button class="button button-block button-balanced ion-ios-information" ng-click="showAboutPopup()">
+   <button class="button button-block button-balanced ion-ios-information" ng-click="aboutModal.show()">
      About
    </button>
  </ion-content>
   </ion-side-menu>
 </ion-side-menus>
-<!-- <ion-side-menus enable-menu-with-back-views="false">
-  <ion-side-menu-content drag-content="false">
-    <ion-nav-bar class="bar-stable">
-      <ion-nav-back-button>
-      </ion-nav-back-button>
-      <ion-nav-buttons side="left">
-        <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
-        </button>
-      </ion-nav-buttons>
-    </ion-nav-bar>
-    <ion-nav-view name="menuContent"></ion-nav-view>
-  </ion-side-menu-content>
-
-  <ion-side-menu side="left">
-    <ion-header-bar class="bar-dark">
-      <h1 class="title">Menu</h1>
-    </ion-header-bar>
-    <ion-content>
-      {{currentList}}
-       <ion-list>
-         <div ng-repeat="group in groups">
-           <ion-item class="item-dark item-toggle"
-                     ng-click="toggleList(group.name)">
-               <i class="icon" ng-class="currentList === group.name ? 'ion-chevron-up' : 'ion-chevron-down'"></i>
-             &nbsp;
-             {{group.name}}
-             <label class="toggle toggle-balanced" ng-if="group.layer">
-               <input type="checkbox" ng-click="$event.stopPropagation()" ng-model="group.layer.visible">
-               <div class="track">
-                 <div class="handle"></div>
-               </div>
-             </label>
-           </ion-item>
-
-             <bike-benefits class="list-items" ng-show="currentList === 'Bike Benefits'" ng-class="{active: currentList === 'Bike Benefits'}" ngcloak></bike-benefits>
-             <bike-shops class="list-items" ng-show="currentList === 'Bike Shops'" ngcloak></bike-shops>
-             <greenways class="list-items" ng-show="currentList === 'Greenways'" ngcloak></greenways>
-             <facilities class="list-items" ng-show="currentList === 'Facilities'" ngcloak></facilities>
-             <routes class="list-items" ng-show="currentList === 'Routes'" ngcloak></routes>
-
-         </div>
-       </ion-list>
-{{group.name}}
-     </ion-content>
-  </ion-side-menu>
-  <ion-side-menu side="right">
-    <ion-header-bar class="bar-dark">
-      <h1 class="title">Navigate</h1>
-    </ion-header-bar>
-    <ion-content>
-      <ion-list>
-        <div ng-repeat="navGroup in navGroups">
-          <ion-item class="item-dark item-toggle"
-                    ng-click="toggleNavGroup(navGroup);$event.stopPropagation();"
-                    ng-class="{active: isNavGroupShown(navGroup)}">
-              <i class="icon" ng-class="isNavGroupShown(navGroup) ? 'ion-chevron-up' : 'ion-chevron-down'"></i>
-            &nbsp;
-            {{navGroup.name}}
-          </ion-item>
-          <div>
-            <navigation-set ng-if="shownNavGroup.name === 'Set From Location' && navGroup.name === 'Set From Location'"></navigation-set>
-            <navigation-set ng-if="shownNavGroup.name === 'Set To Location' && navGroup.name === 'Set To Location'"></navigation-set>
-         </div>
-        </div>
-      </ion-list>
-    </ion-content>
-  </ion-side-menu>
-</ion-side-menus> -->
